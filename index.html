@@ -1,0 +1,1597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07152b">
+<title>Shubh Tour & Travels — V4.3</title>
+<!-- V4.4: loyalty + booking-to-bill flow + all-month/day history. -->
+<style>
+:root{--nav:#07152b;--nav2:#10294b;--gold:#f3b719;--gold2:#ffd45b;--bg:#f4f6f9;--ink:#132238;--muted:#667085;--line:#e4e7ec;--green:#087443;--red:#c53030}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}.app{max-width:680px;margin:auto;min-height:100vh;padding-bottom:92px}
+header{background:linear-gradient(145deg,#050b14,#10294b);color:#fff;padding:12px 14px 22px;border-radius:0 0 28px 28px;box-shadow:0 8px 30px #07152b25}.brandimg{width:100%;height:122px;object-fit:cover;object-position:top;border-radius:18px;opacity:.96}.dashboardLogo{width:170px;height:170px;object-fit:contain;background:#050b14;border:1px solid #f3b71955;border-radius:22px;padding:8px;display:block;margin:0 auto 12px}.billLogoImg{width:150px;height:115px;object-fit:contain;background:#050b14;border-radius:14px;padding:5px}.accountGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.accountStat{background:#f8fafc;border:1px solid #e4e7ec;border-radius:12px;padding:9px}.accountStat b{display:block;font-size:15px}.accountStat span{font-size:9px;color:#667085}.ledgerRow{padding:10px;border:1px solid #e4e7ec;border-radius:12px;margin-top:7px;background:#fff}.ledgerRow small{display:block;color:#667085;font-size:10px;margin-top:2px}.logoLargeBill{width:180px;height:150px;object-fit:contain;background:#050b14;border-radius:18px;padding:5px}.logoHero{text-align:center;margin-bottom:14px}.headrow{display:flex;align-items:center;justify-content:space-between;margin-top:12px}.headrow h1{font-size:18px;margin:0}.headrow p{font-size:10px;color:#dbe5f1;margin:3px 0 0}.pill{background:#ffffff14;border:1px solid #ffffff22;color:#fff;padding:8px 10px;border-radius:12px;font-size:10px;font-weight:900}
+.section{padding:16px}.page{display:none}.page.active{display:block}.card{background:#fff;border:1px solid var(--line);border-radius:19px;padding:16px;margin-bottom:12px;box-shadow:0 6px 25px #1018280a}.card h2{font-size:19px;margin:0 0 12px}.card h3{font-size:16px;margin:0 0 10px}.switch{display:grid;grid-template-columns:1fr 1fr;background:#eef1f5;padding:4px;border-radius:13px;margin-bottom:12px}.switch button{border:0;background:transparent;padding:11px;border-radius:10px;font-weight:900;color:#667085}.switch button.active{background:var(--nav);color:#fff}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;font-size:11px;font-weight:850;color:#344054;margin:9px 0 5px}input,select{width:100%;padding:12px;border:1px solid #d0d5dd;border-radius:12px;font:inherit;background:#fff}input:focus,select:focus{outline:2px solid #f3b71955;border-color:#f3b719}.btn{border:0;border-radius:13px;padding:13px 14px;font-weight:950;font-size:13px;cursor:pointer;width:100%;margin-top:10px}.gold{background:var(--gold);color:#101828}.dark{background:var(--nav);color:#fff}.green{background:var(--green);color:#fff}.outline{background:#fff;border:1px solid #d0d5dd;color:#132238}.danger{background:#fff0f0;color:var(--red);border:1px solid #ffd0d0}.hidden{display:none!important}.status{padding:12px;border-radius:13px;background:#eaf8f0;color:var(--green);font-weight:900;font-size:12px}.booking{margin-top:10px;text-align:center;font-weight:950;letter-spacing:1px;background:#f4f6f9;padding:11px;border-radius:12px}.timer{font-size:40px;font-weight:950;text-align:center;color:var(--green);letter-spacing:1px;margin:12px 0}.muted{font-size:11px;color:var(--muted);line-height:1.55}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:#f8fafc;border:1px solid #e4e7ec;border-radius:14px;padding:12px}.stat b{display:block;font-size:17px}.stat span{font-size:10px;color:#667085}.customer{display:flex;align-items:center;gap:12px;padding:12px;background:#f8fafc;border:1px solid var(--line);border-radius:14px;margin-bottom:9px}.avatar{width:40px;height:40px;border-radius:12px;background:#07152b;color:#f3b719;display:grid;place-items:center;font-weight:950}.customer .grow{flex:1}.customer b{font-size:13px}.customer small{display:block;color:#667085;font-size:10px;margin-top:2px}.mini{width:auto;margin:0;padding:8px 10px;font-size:10px}.billCard{background:linear-gradient(145deg,#06101d,#10294b);color:#fff;border-radius:22px;padding:17px;box-shadow:0 12px 35px #07152b30}.billTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.billTop img{width:120px;height:48px;object-fit:cover;object-position:top;border-radius:8px}.billLabel{font-size:10px;color:#dbe5f1;text-align:right}.billTotal{font-size:39px;font-weight:950;margin:8px 0 14px}.line{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #ffffff20;padding:9px 0;font-size:11px}.line strong{text-align:right}.goldText{color:#ffd45b}.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(680px,100%);background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:7px 7px calc(7px + env(safe-area-inset-bottom));z-index:50}.bottom button{border:0;background:none;color:#475467;font-size:9px;font-weight:900;padding:5px 2px;min-width:0;white-space:nowrap}.bottom span{display:block;font-size:18px;margin-bottom:2px}.toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:#101828;color:#fff;padding:11px 15px;border-radius:12px;font-size:12px;display:none;z-index:99;max-width:90%;text-align:center}.empty{text-align:center;padding:30px 15px;color:#667085}.empty b{display:block;color:#132238;font-size:15px;margin-bottom:5px}
+
+.dashboardHero{background:linear-gradient(145deg,#07152b,#16365e);color:#fff;border-radius:22px;padding:18px;margin-bottom:12px;box-shadow:0 12px 32px #07152b25}.dashTitle{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.dashTitle h2{font-size:23px;margin:0}.dashTitle p{font-size:10px;color:#d9e3ef;margin:5px 0 0}.monthSelect{background:#ffffff12;border:1px solid #ffffff25;color:#fff;padding:9px;border-radius:10px;font-weight:800}.kpiGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}.kpi{background:#ffffff0d;border:1px solid #ffffff18;border-radius:15px;padding:12px}.kpi b{display:block;font-size:24px}.kpi span{font-size:10px;color:#d9e3ef}.kpi.gold b{color:#ffd45b}.metricGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.metric{background:#f8fafc;border:1px solid #e4e7ec;border-radius:14px;padding:12px}.metric b{font-size:19px;display:block}.metric span{font-size:9px;color:#667085}.barBox{margin:10px 0}.barLabel{display:flex;justify-content:space-between;font-size:10px;font-weight:850;margin-bottom:5px}.bar{height:9px;background:#e9edf2;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#07152b,#f3b719);border-radius:20px}.billNo{display:inline-block;background:#f3b719;color:#111827;border-radius:8px;padding:5px 8px;font-size:10px;font-weight:950}.billBrand{display:flex;align-items:center;justify-content:space-between;gap:12px}.billBrand img{width:145px;height:90px;object-fit:contain;object-position:center;background:#050b14;border-radius:10px}.billBrand img.logoLargeBill{width:145px;height:90px;object-fit:contain}.monthEmpty{padding:18px;text-align:center;color:#667085;font-size:11px}.profitNote{font-size:10px;color:#667085;line-height:1.5}.trend{font-size:11px;color:#087443;font-weight:900}.wideBtn{grid-column:1/-1}
+
+.personCard{background:#fff;border:1px solid #e4e7ec;border-radius:17px;padding:13px;margin-bottom:9px;box-shadow:0 5px 18px #10182808}.personHead{display:flex;gap:10px;align-items:center}.personAvatar{width:42px;height:42px;border-radius:13px;background:#07152b;color:#ffd45b;display:grid;place-items:center;font-weight:950}.personInfo{flex:1}.personInfo b{display:block;font-size:13px}.personInfo small{display:block;color:#667085;font-size:10px;margin-top:2px}.tag{display:inline-block;background:#eef2f6;border-radius:7px;padding:4px 7px;font-size:9px;font-weight:850;margin:5px 4px 0 0}.personActions{display:flex;gap:6px;margin-top:9px}.formTitle{font-size:13px;font-weight:900;margin:12px 0 5px}
+
+.contactImport{background:linear-gradient(145deg,#07152b,#16365e);color:#fff;border-radius:18px;padding:15px;margin:12px 0}.contactImport h3{margin:0 0 5px}.contactImport p{font-size:10px;color:#dbe5f1;line-height:1.45}.contactActions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.contactActions a{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.personActions a{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.contactActions .btn{flex:1;min-width:70px}.callBtn{background:#eaf8f0;color:#087443;border:1px solid #b7e3c8}.msgBtn{background:#eef4ff;color:#175cd3;border:1px solid #bfd3ff}.waBtn{background:#eaf8f0;color:#087443;border:1px solid #b7e3c8}
+
+.fleetHero{background:linear-gradient(145deg,#07152b,#16365e);color:#fff;border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 12px 32px #07152b25}.fleetHero h2{margin:0;font-size:22px}.fleetHero p{margin:5px 0 0;font-size:10px;color:#dbe5f1}.fleetKpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.fleetKpi{background:#ffffff10;border:1px solid #ffffff18;border-radius:13px;padding:10px}.fleetKpi b{display:block;font-size:21px}.fleetKpi span{font-size:9px;color:#dbe5f1}.fleetFilters{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fleetFilterWide{grid-column:1/-1}.fleetVehicleGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.fleetVehicle{border:1px solid #e4e7ec;border-radius:14px;padding:11px;background:#f8fafc}.fleetVehicle b{display:block;font-size:14px}.fleetVehicle small{display:block;color:#667085;font-size:9px;margin-top:3px}.fleetVehicle .count{font-size:20px;font-weight:950;color:#07152b;margin-top:5px}.fleetTrip{border:1px solid #e4e7ec;border-radius:15px;padding:12px;margin-top:9px;background:#fff}.fleetTrip.overdue{border-color:#f2b8b5;background:#fff7f7}.fleetTripHead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.fleetTripHead b{font-size:13px}.fleetTripHead small{display:block;color:#667085;font-size:9px;margin-top:3px}.fleetStatus{display:inline-block;border-radius:8px;padding:5px 7px;font-size:9px;font-weight:950}.fleetStatus.out{background:#fff4cc;color:#8a5a00}.fleetStatus.overdue{background:#ffe9e9;color:#b42318}.fleetMeta{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.fleetMeta div{background:#f8fafc;border-radius:9px;padding:7px}.fleetMeta span{display:block;font-size:8px;color:#667085}.fleetMeta b{display:block;font-size:10px;margin-top:2px}.fleetActions{display:flex;gap:6px;margin-top:9px}.fleetActions .btn{margin-top:0;flex:1}.fleetReportRow{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eef0f3;font-size:11px}.fleetReportRow:last-child{border-bottom:0}.fleetEmpty{padding:20px;text-align:center;color:#667085;font-size:11px;background:#f8fafc;border-radius:13px}
+@media(max-width:430px){
+ .app{padding-bottom:82px}
+ header{padding-left:10px;padding-right:10px}
+ .brandClean{gap:7px}
+ .brandCleanLogo{width:64px;height:64px;flex-basis:64px}
+ .brandCleanText h1{font-size:19px}
+ .brandCleanText p{font-size:8px}
+ .bottom{min-height:60px}
+ .bottom button{font-size:7px!important}
+ .bottom span{font-size:15px!important}
+}
+@media print{header,.bottom,.noPrint{display:none!important}.app{max-width:none;padding:0}.billCard{background:#fff!important;color:#111;box-shadow:none;border:2px solid #111}.line{border-color:#ddd}.line strong{color:#111}.billTotal{color:#111}.goldText{color:#111}}
+.reminderCard{border:1px solid #f3b71955;background:linear-gradient(145deg,#fffaf0,#fff)}.reminderHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.reminderBadge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:9px;font-weight:950;background:#fff4cc;color:#8a5a00}.reminderBadge.due{background:#ffe8e8;color:#b42318}.reminderBadge.done{background:#eaf8f0;color:#087443}.bookingReminder{border:1px solid #e4e7ec;border-radius:15px;padding:12px;margin-top:9px;background:#fff}.bookingReminder.urgent{border-color:#f2b8b5;background:#fff8f8}.bookingReminder b{font-size:13px}.bookingReminder small{display:block;color:#667085;font-size:10px;margin-top:3px}.reminderActions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.reminderActions .btn{width:auto;flex:1;min-width:120px;margin-top:0}.timeline{border-left:3px solid #f3b719;padding-left:12px;margin:10px 0}.timeline div{margin:8px 0;font-size:11px}.timeline b{font-size:12px}</style><style>
+/* V4 FINAL FIX */
+.brandClean{display:flex;align-items:center;gap:14px;padding:8px 4px 12px}
+.brandCleanLogo{width:92px;height:92px;object-fit:contain;background:#050b14;border:1px solid #f3b71955;border-radius:16px;padding:5px;flex:0 0 92px}
+.brandCleanText{min-width:0}
+.brandCleanText{flex:1;min-width:0;overflow:hidden}.brandCleanText h1{font-size:clamp(19px,5.6vw,32px);line-height:1.08;margin:0;font-weight:950;white-space:normal;overflow-wrap:anywhere}
+.brandCleanText p{font-size:12px;color:#dbe5f1;margin:6px 0 0;white-space:normal;line-height:1.25}
+.brandClean + .headrow{margin-top:2px}
+.bottom{display:flex!important;flex-wrap:nowrap!important;align-items:stretch;justify-content:space-between;gap:0;width:min(680px,100%);padding-left:3px!important;padding-right:3px!important}
+.bottom button{flex:1 1 0!important;width:14.285714%!important;max-width:14.285714%!important;min-width:0!important;overflow:hidden;text-overflow:clip;white-space:nowrap!important;font-size:clamp(7px,2.2vw,9px)!important;padding-left:0!important;padding-right:0!important}
+.bottom span{font-size:clamp(15px,4.4vw,19px)!important;line-height:18px;margin-bottom:1px!important}
+@media(max-width:390px){
+ .brandClean{gap:7px;padding-left:2px;padding-right:2px}
+ .brandCleanLogo{width:64px;height:64px;flex-basis:64px}
+ .brandCleanText h1{font-size:19px}
+ .brandCleanText p{font-size:8px}
+ .headrow h1{font-size:16px}
+ .headrow p{font-size:9px}
+ .bottom{min-height:60px;padding-top:5px!important;padding-bottom:calc(5px + env(safe-area-inset-bottom))!important}
+ .bottom button{font-size:7px!important;line-height:1.05;height:50px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:1px}
+ .bottom span{font-size:15px!important}
+}
+</style>
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shubh Tour">
+</head>
+<body>
+<div class="app">
+<header>
+<div class="brandClean">
+  <img src="logo.png" alt="Shubh Tour & Travels" class="brandCleanLogo">
+  <div class="brandCleanText">
+    <h1>SHUBH TOUR & TRAVELS</h1>
+    <p>Safe Drive • Happy Ride • Professional Service</p>
+  </div>
+</div>
+<div class="headrow"><div></div><div style="display:flex;gap:6px;align-items:center"><button id="installBtn" class="pill" style="border:1px solid #ffffff22;background:#ffffff14;color:#fff;cursor:pointer">INSTALL APP</button></div></div>
+</header>
+
+<section class="section">
+<div id="home" class="page active">
+<div class="dashboardHero">
+ <div class="logoHero"><img class="dashboardLogo" src="logo.png" alt="Shubh Tour & Travels Logo"></div>
+ <div class="dashTitle">
+  <div><h2>Business Dashboard</h2><p id="dashSubtitle">Monthly performance overview</p></div>
+  <select class="monthSelect" id="monthFilter" onchange="renderHome()"></select>
+ </div>
+ <div style="display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px;flex-wrap:wrap">
+  <label style="color:#d9e3ef;margin:0">Exact Date</label>
+  <input id="dateFilter" type="date" onchange="renderHome()" style="background:#ffffff12;border:1px solid #ffffff25;color:#fff;padding:9px;border-radius:10px;font-weight:800;max-width:160px">
+  <button class="pill" type="button" onclick="clearDashboardDate()" style="border:1px solid #ffffff25;background:#ffffff12;color:#fff;cursor:pointer">CLEAR DATE</button>
+ </div>
+ <div class="kpiGrid">
+  <div class="kpi gold"><b id="monthRevenue">₹0</b><span>MONTHLY REVENUE</span></div>
+  <div class="kpi"><b id="monthBills">0</b><span>COMPLETED BOOKINGS</span></div>
+  <div class="kpi"><b id="monthCustomers">0</b><span>UNIQUE CUSTOMERS</span></div>
+  <div class="kpi"><b id="monthKm">0</b><span>TOTAL KM</span></div>
+ </div>
+</div>
+
+<div class="card">
+ <h3>Operations</h3>
+ <div class="grid2">
+  <button class="btn dark" onclick="go('drivers')">👨‍✈️ Driver Management</button>
+  <button class="btn dark" onclick="go('vendors')">🚗 Vendor Management</button>
+  <button class="btn outline" onclick="go('accounts')">💰 Payments & Commission</button>
+  <button class="btn gold" onclick="openDriverShare()">📤 Share Driver Details</button>
+ </div>
+</div>
+
+<div class="card">
+ <h3>Monthly Business Split</h3>
+ <div class="metricGrid">
+  <div class="metric"><b id="driverCount">0</b><span>DRIVER SERVICE</span></div>
+  <div class="metric"><b id="carCount">0</b><span>CAR RENTAL</span></div>
+  <div class="metric"><b id="avgBill">₹0</b><span>AVG. BILL</span></div>
+ </div>
+ <div class="barBox"><div class="barLabel"><span>Driver Service</span><span id="driverPct">0%</span></div><div class="bar"><i id="driverBar" style="width:0%"></i></div></div>
+ <div class="barBox"><div class="barLabel"><span>Car Rental</span><span id="carPct">0%</span></div><div class="bar"><i id="carBar" style="width:0%"></i></div></div>
+</div>
+
+<div class="card">
+ <h3>Revenue Breakdown</h3>
+ <div class="metricGrid">
+  <div class="metric"><b id="driverRevenue">₹0</b><span>DRIVER REVENUE</span></div>
+  <div class="metric"><b id="carRevenue">₹0</b><span>CAR REVENUE</span></div>
+  <div class="metric"><b id="extraRevenue">₹0</b><span>EXTRA-TIME REVENUE</span></div>
+ </div>
+ <p class="profitNote">Revenue means completed-bill gross collection. Expenses, fuel, driver salary, tolls or other business costs are not deducted unless you add an expense module later.</p>
+</div>
+
+<div class="card">
+ <h3>Quick Actions</h3>
+ <button class="btn gold" onclick="newBooking()">＋ NEW BOOKING</button><button class="btn dark" onclick="newManualBill()">🧾 MANUAL BILL</button>
+ <button class="btn dark" onclick="go('customers')">👤 CUSTOMER DATABASE</button>
+<button class="btn outline" onclick="go('vendors')">🚗 VENDOR LIST</button>
+<button class="btn dark" onclick="go('fleet')">🚘 FLEET & CURRENT REPORT</button>
+<button class="btn outline" onclick="go('drivers')">👨‍✈️ DRIVER LIST</button><button class="btn gold" onclick="openDriverShare()">📤 SHARE DRIVER DETAILS</button>
+ <button class="btn outline" onclick="go('bookingManager')">📅 BOOKINGS & REMINDERS</button><button class="btn outline" onclick="go('history')">🧾 ALL BILL HISTORY</button>
+</div>
+
+
+<div class="card syncCard">
+ <h3>☁️ Google Sheets Sync</h3>
+ <p class="muted">App ka customer, booking, bill, driver, vendor aur accounts data Google Sheet me backup hoga.</p>
+ <label>Google Apps Script Web App URL</label>
+ <input id="syncUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec">
+ <label>Sync Secret</label>
+ <input id="syncSecret" type="password" placeholder="Same secret as Apps Script">
+ <div class="grid2">
+  <button class="btn gold" onclick="saveSyncSettings()">💾 SAVE SYNC URL</button>
+  <button class="btn dark" onclick="syncNow()">☁️ SAVE CLOUD</button>
+ </div>
+ <div class="grid2"><button class="btn outline" onclick="syncPull()">☁️ LOAD CLOUD DATA</button><button class="btn outline" onclick="syncPull(true).catch(()=>{})">↻ REFRESH FROM CLOUD</button></div><div id="syncStatus" class="muted" style="margin-top:8px">Cloud sync not configured</div>
+</div>
+
+<div id="activeHome" class="card hidden">
+ <h3>🟢 Active Duty</h3><div class="status">Duty is currently running</div><div class="booking" id="activeHomeId"></div>
+ <button class="btn green" onclick="go('duty')">OPEN ACTIVE DUTY</button>
+</div>
+<div class="card">
+ <h3>⭐ Loyalty & Permanent Driver</h3>
+ <p class="muted">Customer ka loyalty stamp aur permanent driver package record yahan se check/share karo.</p>
+ <div class="grid2">
+  <input id="loyaltyLookup" placeholder="Customer WhatsApp number" inputmode="numeric">
+  <button class="btn gold" onclick="lookupCustomerLoyalty()">🔎 CHECK CUSTOMER</button>
+ </div>
+ <div id="loyaltyLookupResult" class="muted" style="margin-top:8px">Customer number dalo.</div>
+</div>
+<div class="card" id="homeBottomReferral">
+ <h3>🎁 Referral Program — Refer & Earn ₹100</h3>
+ <p class="muted">Har customer ka unique referral code banao aur WhatsApp par share karo. Referred customer ki first completed booking ke baad ₹100 bonus milega.</p>
+ <label>Customer WhatsApp Number</label>
+ <div class="grid2">
+  <input id="referralLookup" placeholder="Customer WhatsApp number" inputmode="numeric">
+  <button class="btn gold" onclick="lookupReferral()">🔎 REFERRAL</button>
+ </div>
+ <div id="referralResult" class="muted" style="margin-top:8px">Customer number dalo.</div>
+ <div style="margin-top:14px;border-top:1px solid #e4e7ec;padding-top:12px">
+  <label>Admin: Referral Code se Referrer Check</label>
+  <div class="grid2"><input id="referralCodeAdmin" placeholder="STXXXXXXX" style="text-transform:uppercase"><button class="btn outline" onclick="lookupReferralByCode()">🔎 FIND REFERRER</button></div>
+  <div id="referralAdminResult" class="muted" style="margin-top:8px">Code dalo to referrer aur successful referrals dikhenge.</div>
+ </div>
+</div>
+<div class="card reminderCard">
+ <div class="reminderHead"><div><h3>📅 Upcoming Bookings & Reminders</h3><p class="muted">Kal/आज ki duty, driver assignment aur confirmation status yahin dikhega.</p></div><span id="reminderCount" class="reminderBadge">0</span></div>
+ <div id="homeUpcomingBookings"></div>
+ <button class="btn outline" onclick="go('bookingManager')">OPEN BOOKING MANAGER</button>
+</div>
+
+<div class="card"><h3>Services</h3><div class="muted">Driver Service • Car Rental • Outstation Trips • Bus Ticket Booking • Railway Ticket Booking</div></div>
+</div>
+
+
+<div id="manual" class="page">
+<div class="card">
+<h2>🧾 Manual Bill</h2>
+<p class="muted">Agar duty app se start nahi hui thi, tab bhi yahan se completed bill manually bana sakte ho. Ye bill dashboard aur history mein count hoga.</p>
+<div class="switch"><button id="mDriverBtn" class="active" onclick="setManualService('driver')">👨‍✈️ Driver</button><button id="mCarBtn" onclick="setManualService('car')">🚗 Car Rental</button></div>
+<div id="mDriverOptions">
+<label>Driver Plan</label><select id="mDriverPlan"><option value="1to4">1–4 Hours — ₹600</option><option value="8">8 Hours — ₹800 + Food</option><option value="10" selected>10 Hours — ₹1,000 + Food</option><option value="12">12 Hours — ₹1,200 + Food</option><option value="outstation">Outstation — ₹1,500 + Living + Fooding</option></select>
+</div>
+<div id="mCarOptions" class="hidden">
+<label>Car</label><select id="mCar"><option value="Dzire">Maruti Suzuki Dzire</option><option value="Ertiga">Maruti Suzuki Ertiga</option><option value="Innova">Toyota Innova</option><option value="Crysta">Innova Crysta</option><option value="Scorpio">Mahindra Scorpio</option><option value="Toofan">Toofan</option><option value="TT17">Tempo Traveller 17 Seater</option><option value="TT20">Tempo Traveller 20 Seater</option><option value="TT24">Tempo Traveller 24 Seater</option></select>
+<label>Rate Type</label><select id="mCarType"><option value="local">Local – Raipur</option><option value="outstation">Outstation</option></select>
+</div>
+<label>Customer Name</label><input id="mName" placeholder="Customer name">
+<label>WhatsApp Number</label><input id="mPhone" inputmode="numeric" placeholder="919xxxxxxxxx">
+<label>Referral Code (optional)</label><input id="mReferralCode" placeholder="STXXXXXXX" style="text-transform:uppercase">
+<label>Assigned Driver (optional)</label><select id="mAssignedDriver"><option value="">Select saved driver</option></select>
+<div class="grid2"><div><label>Duty Date</label><input id="mDate" type="date"></div><div><label>Start Time</label><input id="mStartTime" type="time"></div></div>
+<div class="grid2"><div><label>End Time</label><input id="mEndTime" type="time"></div><div><label>Total KM</label><input id="mKm" type="number" min="0" step=".1" placeholder="85"></div></div>
+<div class="grid2"><div id="mCustomKmRateWrap"><label>Custom KM Rate (optional)</label><input id="mCustomKmRate" type="number" min="0" step=".01" placeholder="Default rate"></div><div><label>Custom Rent (optional)</label><input id="mCustomRent" type="number" min="0" step=".01" placeholder="Default rent"></div></div>
+<div class="grid2"><div id="mTollWrap"><label>Toll (optional)</label><input id="mToll" type="number" min="0" step=".01" placeholder="0"></div><div><label>Other Charge (optional)</label><input id="mOther" type="number" min="0" step=".01" placeholder="0"></div></div>
+<button class="btn gold" onclick="createManualBill()">🧾 GENERATE MANUAL BILL</button>
+<button class="btn outline" onclick="go('home')">← Back</button>
+</div>
+</div>
+
+<div id="booking" class="page">
+<div class="card">
+<h2>New Booking</h2>
+<div class="switch"><button id="driverBtn" class="active" onclick="setService('driver')">👨‍✈️ Driver Service</button><button id="carBtn" onclick="setService('car')">🚗 Car Rental</button></div>
+<div id="driverOptions">
+<label>Driver Plan</label><select id="driverPlan"><option value="1to4">1–4 Hours — ₹600</option><option value="8">8 Hours — ₹800 + Food</option><option value="10" selected>10 Hours — ₹1,000 + Food</option><option value="12">12 Hours — ₹1,200 + Food</option><option value="outstation">Outstation — ₹1,500 + Living + Fooding</option></select>
+<label>Permanent Driver Package (optional)</label><select id="driverPackage"><option value="">No Package / Regular Booking</option><option value="one_time">One Time Driver — ₹1,000</option><option value="six_month">6 Month Driver Package — ₹2,000</option></select>
+<p class="muted">Package select karne par customer ke naam se joining date, service end date aur assigned driver ka permanent record automatically save hoga.</p>
+<label>Assigned Driver</label><select id="assignedDriver"><option value="">Select saved driver</option></select>
+<button type="button" class="btn outline mini" onclick="toggleNewBookingDriver()">＋ NEW DRIVER</button>
+<div id="newBookingDriverBox" class="hidden card" style="margin-top:8px;background:#f8fafc">
+<label>New Driver Name</label><input id="newBookingDriverName" placeholder="Driver name">
+<label>Driver Phone / WhatsApp</label><input id="newBookingDriverPhone" inputmode="numeric" placeholder="91xxxxxxxxxx">
+<label>License No. (Optional)</label><input id="newBookingDriverLicense" placeholder="Optional">
+<p class="muted">Booking confirm/start karte hi new driver automatically Driver List me save ho jayega.</p>
+</div>
+</div>
+<div id="carOptions" class="hidden">
+<label>Car</label><select id="car"><option value="Dzire">Maruti Suzuki Dzire</option><option value="Ertiga">Maruti Suzuki Ertiga</option><option value="Innova">Toyota Innova</option><option value="Crysta">Innova Crysta</option><option value="Scorpio">Mahindra Scorpio</option><option value="Toofan">Toofan</option><option value="TT17">Tempo Traveller 17 Seater</option><option value="TT20">Tempo Traveller 20 Seater</option><option value="TT24">Tempo Traveller 24 Seater</option></select>
+<label>Rate Type</label><select id="carType"><option value="local">Local – Raipur</option><option value="outstation">Outstation</option></select>
+<label>Assigned Driver</label><select id="carAssignedDriver"><option value="">Select saved driver</option></select>
+<button type="button" class="btn outline mini" onclick="toggleNewBookingDriver()">＋ NEW DRIVER</button>
+<label>Vehicle Number</label><input id="bookingVehicleNo" placeholder="CG04 XX 0000">
+<label>Assigned Vehicle Vendor (optional)</label><select id="assignedVendor"><option value="">Select saved vendor</option></select>
+<p class="muted">Car Rental Rule: up to 300 km = minimum 80 km charge + rent. 300 km or more = ₹12/km only; rent is not added.</p>
+</div>
+<label>Customer</label>
+<input id="customerSearch" placeholder="Type name or WhatsApp to search saved customer" oninput="customerSuggestions()">
+<div id="suggestions"></div>
+<label>Customer Name</label><input id="customerName" placeholder="Customer name">
+<label>WhatsApp Number</label><input id="customerPhone" inputmode="numeric" placeholder="919xxxxxxxxx">
+<label>Referral Code (optional)</label><input id="bookingReferralCode" placeholder="Example: STXXXXXXX" style="text-transform:uppercase">
+<div class="grid2"><div><label>Start Date & Time</label><input id="startAt" type="datetime-local"></div><div><label>Start KM</label><input id="startKm" type="number" min="0" step=".1" placeholder="25000"></div></div>
+<button class="btn gold" onclick="confirmBooking()">✅ CONFIRM BOOKING</button>
+<button class="btn green" onclick="startDuty()">▶ START DUTY</button>
+<button class="btn outline" onclick="go('home')">← Back</button>
+</div>
+</div>
+
+<div id="duty" class="page">
+<div class="card">
+<h2>Duty In Progress</h2><div class="status">🟢 DUTY ACTIVE</div><div class="booking" id="dutyId"></div>
+<div class="timer" id="timer">00:00:00</div><p class="muted" id="dutyInfo"></p>
+<div class="grid2"><div><label>End Date & Time</label><input id="endAt" type="datetime-local"></div><div><label>End KM</label><input id="endKm" type="number" min="0" step=".1" placeholder="25085"></div></div>
+<div class="grid2" id="endCustomRateRow">
+<div><label>Custom KM Rate (optional)</label><input id="endCustomKmRate" type="number" min="0" step=".01" placeholder="Default rate"></div>
+<div><label>Custom Rent (optional)</label><input id="endCustomRent" type="number" min="0" step=".01" placeholder="Default rent"></div>
+</div>
+<div id="endTollWrap"><label>Toll / Other Charge</label><input id="endToll" type="number" min="0" step=".01" value="0" placeholder="₹ 0">
+</div><p class="muted">Customer ke liye special rate dena ho to yahin rate/rent edit kar sakte ho. Blank chhodoge to default rate lagega.</p>
+<button id="sendDutyToDriverBtn" class="btn green hidden" onclick="sendCurrentBookingToDriver()">💬 SEND BOOKING TO DRIVER</button>
+<button id="shareDutyDriverBtn" class="btn outline hidden" onclick="shareCurrentDriverToCustomer()">📤 SEND DRIVER DETAILS TO CUSTOMER</button><button id="rideStartCustomerBtn" class="btn gold hidden" onclick="sendRideStartToCustomer()">🚗 SEND RIDE START UPDATE</button>
+<button class="btn dark" onclick="endDuty()">⏹ END DUTY & GENERATE BILL</button>
+<button class="btn danger" onclick="confirmCancelDuty()">Cancel Active Duty</button>
+</div>
+</div>
+
+<div id="bookingReceipt" class="page"><div class="card" id="bookingReceiptCard"><div class="billBrand"><img class="logoLargeBill" src="logo.png" alt="Shubh Tour & Travels Logo"><div class="billLabel"><span class="billNo" id="rBookingNo">BOOKING</span><br><br>BOOKING CONFIRMATION<br><span id="rBookingDate"></span></div></div><div class="billTotal" id="rServiceTitle">BOOKING CONFIRMED</div><p class="muted" style="text-align:center">Confirmation image mein Shubh logo included hai. WhatsApp text message mein image automatically attach nahi hoti; image bhejne ke liye SHARE CONFIRMATION IMAGE use karo.</p><div class="status" style="margin:10px 0">🟢 <span id="rBookingStatus">BOOKING CONFIRMED</span></div><div class="line"><span>Customer</span><strong id="rCustomer"></strong></div><div class="line"><span>Service</span><strong id="rService"></strong></div><div class="line"><span>Journey Date & Time</span><strong id="rStart"></strong></div><div class="line"><span>Driver</span><strong id="rDriver"></strong></div><div class="line" id="rDriverPhoneRow"><span>Driver Contact</span><strong id="rDriverPhone"></strong></div><div class="line" id="rVehicleRow"><span>Vehicle</span><strong id="rVehicle"></strong></div><div class="line" id="rVehicleNoRow"><span>Vehicle Number</span><strong id="rVehicleNo"></strong></div><div class="line"><span>Booking ID</span><strong id="rId"></strong></div><div style="text-align:center;margin-top:18px;padding:15px;border-radius:14px;background:#07152b;color:#fff"><b style="color:#f3b719;font-size:16px">RIDE WITH TRUST • TRAVEL WITH SHUBH</b><br><span style="font-size:11px">Thank you for choosing Shubh. We look forward to serving you.</span><br><span style="font-size:10px">6265584095 / 9893772425</span></div></div><div class="card noPrint" id="bookingBillPanel">
+<h3>🧾 Complete Booking & Generate Bill</h3>
+<p class="muted">Customer details dobara bharne ki zaroorat nahi. Booking se sab details auto-fill hongi. Sirf final end time, end KM aur extra charges verify karo.</p>
+<div class="grid2"><div><label>End Date & Time</label><input id="bookingBillEndAt" type="datetime-local"></div><div><label>End KM</label><input id="bookingBillEndKm" type="number" min="0" step=".1" placeholder="Final KM"></div></div>
+<div class="grid2"><div><label>Custom KM Rate (optional)</label><input id="bookingBillKmRate" type="number" min="0" step=".01" placeholder="Default rate"></div><div><label>Custom Rent (optional)</label><input id="bookingBillRent" type="number" min="0" step=".01" placeholder="Default rent"></div></div>
+<div class="grid2"><div><label>Toll</label><input id="bookingBillToll" type="number" min="0" step=".01" value="0"></div><div><label>Other Charge</label><input id="bookingBillOther" type="number" min="0" step=".01" value="0"></div></div>
+<button class="btn dark" onclick="generateBillFromBooking()">🧾 GENERATE FINAL BILL</button>
+</div><div class="card noPrint"><button class="btn gold" onclick="whatsappBookingConfirmation()">💬 SEND BOOKING CONFIRMATION</button><button class="btn outline" onclick="shareBookingReceipt()">📤 SHARE CONFIRMATION IMAGE</button><button class="btn gold" onclick="openBillFromBooking()">🧾 COMPLETE BOOKING & GENERATE BILL</button><button class="btn dark" onclick="go('home')">← Back Home</button><button class="btn green" onclick="markBookingConfirmationSent()">✅ MARK CONFIRMATION SENT</button>
+   ${b.driverSentAt?"<button class='btn outline mini' onclick='unmarkDriver(\""+b.id+"\")'>↩ Driver Sent</button>":"<button class='btn gold mini' onclick='markBookingById(\""+b.id+"\",\"driverSentAt\")'>👨‍✈️ DRIVER SENT</button>"}
+<button class="btn gold" onclick="go('bookingManager')">📅 OPEN BOOKING REMINDERS</button>
+</div></div>
+
+<div id="bill" class="page">
+<div class="billCard" id="billCard">
+<div class="billBrand"><div><img class="billLogoImg logoLargeBill" src="logo.png" alt="Shubh Tour & Travels Logo"></div><div class="billLabel"><span class="billNo" id="billNo">BILL NO.</span><br><br>FINAL DUTY BILL<br><span id="billDate"></span></div></div>
+<div class="billTotal" id="total">₹0.00</div>
+<div class="line"><span>Bill Number</span><strong id="bBillNo"></strong></div><div class="line"><span>Bill Date</span><strong id="bBillDate"></strong></div>
+<div class="line"><span>Booking ID</span><strong id="bId"></strong></div>
+<div class="line"><span>Customer</span><strong id="bCustomer"></strong></div>
+<div class="line"><span>Service</span><strong id="bService"></strong></div>
+<div class="line"><span>Actual Duty</span><strong id="bActual"></strong></div><div class="line"><span>Duty Days</span><strong id="bDutyDays">1 day</strong></div><div class="line"><span>Service Dates</span><strong id="bDutyDates">—</strong></div>
+<div class="line"><span>Included Duty</span><strong id="bIncluded"></strong></div>
+<div class="line"><span>Extra Time</span><strong class="goldText" id="bExtra"></strong></div>
+<div class="line"><span>Extra Charge</span><strong class="goldText" id="bExtraCharge"></strong></div>
+<div class="line"><span>Total KM</span><strong id="bKm"></strong></div>
+<div class="line"><span>KM Rate</span><strong id="bKmRate"></strong></div><div class="line"><span>KM Charge</span><strong id="bKmCharge"></strong></div><div class="line"><span>Pricing Rule</span><strong id="bPricingRule"></strong></div>
+<div class="line"><span>Base Charge</span><strong id="bBase"></strong></div>
+<div class="line"><span>Toll</span><strong id="bToll"></strong></div>
+<div class="line"><span>Other</span><strong id="bOther"></strong></div>
+</div>
+<div class="card noPrint">
+<div class="grid2"><div><label>Edit KM Rate (₹/km)</label><input id="editKmRate" type="number" min="0" step=".01"></div><div><label>Edit Rent (₹)</label><input id="editRent" type="number" min="0" step=".01"></div></div>
+<div class="grid2"><div><label>Edit Toll</label><input id="editToll" type="number" min="0" step=".01"></div><div><label>Edit Other</label><input id="editOther" type="number" min="0" step=".01"></div></div>
+<button class="btn outline" onclick="updateBillCharges()">💾 UPDATE BILL CHARGES</button>
+<button class="btn gold" onclick="shareBillImage()">📤 SHARE BILL IMAGE</button>
+<button class="btn dark" onclick="whatsappBillImage()">💬 WHATSAPP BILL IMAGE</button>
+<button class="btn outline" onclick="downloadBillImage()">⬇ DOWNLOAD BILL IMAGE</button>
+<button class="btn gold" onclick="shareLatestLoyaltyCard()">⭐ SHARE LOYALTY CARD</button>
+<button class="btn outline" onclick="shareLatestDriverPackage()">👨‍✈️ SHARE DRIVER PACKAGE</button>
+<button class="btn outline" onclick="window.print()">🖨 PRINT / SAVE</button>
+<button class="btn green" onclick="newBooking()">＋ NEW CUSTOMER / BOOKING</button><button class="btn danger" onclick="deleteCurrentBill()">🗑 DELETE THIS BILL / LOG</button>
+<button class="btn outline" onclick="go('history')">Bill History</button>
+</div>
+</div>
+
+<div id="customers" class="page">
+<div class="card"><h2>Saved Customers</h2><p class="muted">Customer details automatically save after the first booking.</p>
+<div class="contactImport"><h3>📱 Import Customer Contacts</h3><p>Select contacts from your phone and save them as customers. Only contacts you explicitly select are shared with this app.</p><button class="btn gold" onclick="importCustomerContacts()">IMPORT FROM PHONE</button></div><div id="customerList"></div><button class="btn outline" onclick="go('home')">← Back Home</button></div>
+</div>
+
+
+<div id="vendors" class="page">
+<div class="card"><h2>🚗 Vendor List</h2><p class="muted">Jin vendors se tum vehicle lete ho unka naam, number aur vehicle details yahan save/update karo.</p>
+<div class="contactImport"><h3>📱 Phone Contacts</h3><p>Select contacts directly from your phone. After you select them, you can save them as Vendors. Your app cannot silently read the whole phonebook; your phone controls which contacts you share.</p><button class="btn gold" onclick="importPhoneContacts('vendor')">IMPORT FROM PHONE CONTACTS</button></div>
+<button class="btn gold" onclick="openPersonForm('vendor')">＋ ADD VENDOR MANUALLY</button>
+<div id="vendorForm" class="hidden"></div>
+<div id="vendorList"></div>
+<button class="btn outline" onclick="go('home')">← Back Home</button></div>
+</div>
+
+<div id="drivers" class="page">
+<div class="card"><h2>👨‍✈️ Driver List</h2><p class="muted">Apne drivers ka contact aur status manage karo. New driver kabhi bhi add ya update kar sakte ho.</p>
+<div class="contactImport"><h3>📱 Phone Contacts</h3><p>Select contacts directly from your phone. After you select them, you can save them as Drivers. Your app cannot silently read the whole phonebook; your phone controls which contacts you share.</p><button class="btn gold" onclick="importPhoneContacts('driver')">IMPORT FROM PHONE CONTACTS</button></div>
+<button class="btn gold" onclick="openPersonForm('driver')">＋ ADD DRIVER MANUALLY</button>
+<div id="driverForm" class="hidden"></div>
+<div id="driverList"></div>
+<button class="btn outline" onclick="go('home')">← Back Home</button></div>
+</div>
+
+
+<div id="fleet" class="page">
+<div class="fleetHero"><h2>🚘 Fleet & Deployment</h2><p>Vendor vehicle, driver deployment aur current return status ek hi jagah manage karo.</p><div class="fleetKpis"><div class="fleetKpi"><b id="fleetTotalVendors">0</b><span>VENDORS</span></div><div class="fleetKpi"><b id="fleetAvailable">0</b><span>AVAILABLE</span></div><div class="fleetKpi"><b id="fleetOut">0</b><span>ON TRIP</span></div></div></div>
+<div class="card"><h3>➕ Send Vehicle / Driver</h3>
+<div class="switch"><button id="fleetVendorBtn" class="active" onclick="setFleetKind('vendor')">🚗 Vendor Vehicle</button><button id="fleetDriverBtn" onclick="setFleetKind('driver')">👨‍✈️ Driver</button></div>
+<div id="fleetVendorFields"><label>Vendor</label><select id="fleetVendorSelect" onchange="fillFleetVendor()"></select><div class="grid2"><div><label>Vehicle</label><input id="fleetVehicle" placeholder="Dzire / Crysta..." readonly></div><div><label>Vehicle Number</label><input id="fleetVehicleNo" placeholder="CG04 XX 0000" readonly></div></div></div>
+<div id="fleetDriverFields" class="hidden"><label>Driver</label><select id="fleetDriverSelect"></select><div class="grid2"><div><label>Vehicle</label><input id="fleetDriverVehicle" placeholder="Vehicle used"></div><div><label>Vehicle Number</label><input id="fleetDriverVehicleNo" placeholder="Optional"></div></div></div>
+<div class="grid2"><div><label>Sent Date</label><input id="fleetStartDate" type="date"></div><div><label>Return Date</label><input id="fleetReturnDate" type="date"></div></div>
+<div class="grid2"><div><label>Sent To / Location</label><input id="fleetLocation" placeholder="Bilaspur / Raipur..."></div><div><label>Rate (₹)</label><input id="fleetRate" type="number" min="0" step="1" placeholder="3500"></div></div>
+<label>Customer / Party</label><input id="fleetCustomer" placeholder="Customer name (optional)"><label>Note</label><input id="fleetNote" placeholder="Trip details / payment note">
+<button class="btn gold" onclick="saveFleetAssignment()">SAVE DEPLOYMENT</button></div>
+<div class="card"><h3>🔎 Vehicle-wise Vendor Count</h3><div class="fleetFilters"><select id="fleetVehicleFilter" onchange="renderFleet()"><option value="">All Vehicles</option></select><select id="fleetStatusFilter" onchange="renderFleet()"><option value="">All Status</option><option value="out">On Trip</option><option value="overdue">Return Overdue</option></select><input id="fleetSearch" class="fleetFilterWide" oninput="renderFleet()" placeholder="Search vendor / driver / location / number..."></div><div id="fleetVehicleCounts" class="fleetVehicleGrid" style="margin-top:10px"></div><div style="margin-top:12px"><h3 style="font-size:14px">👥 Vendor Names & Numbers</h3><div id="fleetVendorDirectory"></div></div></div>
+<div class="card"><h3>📍 Current Deployments</h3><div id="fleetCurrentList"></div></div><div class="card"><h3>📊 Current Report</h3><div id="fleetReport"></div></div><button class="btn outline" onclick="go('home')">← Back Home</button></div>
+
+<div id="shareDriver" class="page">
+<div class="card">
+<h2>📤 Share Driver Details</h2>
+<p class="muted">Saved Driver List se sirf driver name/number lo. Vehicle details sirf Car Rental booking ke liye optional hain.</p>
+
+<div class="switch"><button id="savedDriverBtn" class="active" onclick="setShareMode('saved')">Saved Driver</button><button id="manualDriverBtn" onclick="setShareMode('manual')">Manual Details</button></div>
+
+<div id="savedDriverShare">
+<label>Select Driver</label><select id="shareDriverSelect" onchange="fillShareDriver()"><option value="">Select driver</option></select>
+</div>
+
+<div id="manualDriverShare" class="hidden">
+<label>Driver Name</label><input id="manualDriverName" placeholder="Driver name">
+<div class="grid2"><div><label>Driver WhatsApp / Phone</label><input id="manualDriverPhone" inputmode="numeric" placeholder="91xxxxxxxxxx"></div><div><label>Vehicle Number (optional)</label><input id="manualVehicleNo" placeholder="CG04 XX 0000"></div></div>
+<label>Vehicle Name / Model (optional)</label><input id="manualVehicle" placeholder="Dzire / Ertiga / Innova Crysta">
+</div>
+
+<label>Saved Customer (optional)</label><select id="shareCustomerSelect" onchange="useShareCustomer()"><option value="">Select saved customer</option></select>
+<label>Customer Name</label><input id="shareCustomerName" placeholder="Customer name">
+<label>Customer WhatsApp Number</label><input id="shareCustomerPhone" inputmode="numeric" placeholder="91xxxxxxxxxx">
+
+<div class="card" style="margin-top:12px;background:#f8fafc">
+<h3>Message Preview</h3>
+<div id="driverMessagePreview" class="muted">Driver select karo ya manual details bharo.</div>
+</div>
+
+<button class="btn gold" onclick="shareDriverMessage()">📤 SHARE DRIVER DETAILS</button>
+<button class="btn dark" onclick="whatsappDriverMessage()">💬 SEND ON WHATSAPP</button>
+<button class="btn outline" onclick="copyDriverMessage()">📋 COPY MESSAGE</button>
+<button class="btn outline" onclick="go('home')">← Back Home</button>
+</div>
+</div>
+
+
+<div id="accounts" class="page">
+<div class="card">
+<h2>💰 Driver & Vendor Accounts</h2>
+<p class="muted">Har driver/vendor ka kaam, payment aur commission permanently browser storage me save rahega. Bill se assigned driver/vendor ka work count automatically add hota hai.</p>
+<div class="switch"><button id="accDriverBtn" class="active" onclick="setAccountType('driver')">👨‍✈️ Drivers</button><button id="accVendorBtn" onclick="setAccountType('vendor')">🚗 Vendors</button></div>
+<div id="accountList"></div>
+</div>
+<div class="card">
+<h3>➕ Record Payment / Commission / Work</h3>
+<label>Person</label><select id="ledgerPerson"></select>
+<div class="grid2"><div><label>Date</label><input id="ledgerDate" type="date"></div><div><label>Payment Given (₹)</label><input id="ledgerPayment" type="number" min="0" step=".01" placeholder="0"></div></div>
+<div class="grid2"><div><label>Commission Received (₹)</label><input id="ledgerCommission" type="number" min="0" step=".01" placeholder="0"></div><div><label>Work Given</label><select id="ledgerWork"><option value="1">Yes — Count 1 work</option><option value="0">No</option></select></div></div>
+<label>Note / Bill No.</label><input id="ledgerNote" placeholder="e.g. ST-2026-00012 / Innova trip">
+<button class="btn gold" onclick="saveLedgerEntry()">SAVE RECORD</button>
+</div>
+<div class="card">
+<h3>Ledger History</h3>
+<div id="ledgerHistory"></div>
+</div>
+<button class="btn outline" onclick="go('home')">← Back Home</button>
+</div>
+
+<div id="bookingManager" class="page">
+<div class="card">
+ <div class="reminderHead"><div><h2>📅 Bookings & Reminders</h2><p class="muted">Confirmed bookings, driver status, customer confirmation aur upcoming duty ek jagah.</p></div><span id="bookingManagerCount" class="reminderBadge">0</span></div>
+ <button class="btn gold" onclick="newBooking()">＋ NEW BOOKING</button>
+ <button class="btn outline" onclick="enableBookingReminders()">🔔 ENABLE REMINDERS</button>
+ <div id="reminderPermission" class="muted" style="margin-top:8px"></div>
+ <div class="timeline">
+  <div><b>Booking confirmed</b> — customer ko confirmation receipt/WhatsApp bhejo.</div>
+  <div><b>Driver assigned</b> — driver ko duty details bhejo.</div>
+  <div><b>Upcoming reminder</b> — app me due booking highlight hogi.</div>
+  <div><b>After duty</b> — active duty se bill generate karo.</div>
+ </div>
+ <div id="bookingManagerList"></div>
+ <button class="btn outline" onclick="go('home')">← Back Home</button>
+</div>
+</div>
+
+<div id="history" class="page">
+<div class="card"><h2>🧾 Complete History</h2>
+<p class="muted">Kisi bhi month, kisi bhi exact date aur customer ke hisaab se bills aur bookings dekho. Purana data automatically hide nahi hoga.</p>
+<div class="grid2"><div><label>Month</label><select id="historyMonth" onchange="renderHistory()"></select></div><div><label>Exact Date (optional)</label><input id="historyDate" type="date" onchange="renderHistory()"></div></div>
+<label>Customer / Booking / Bill Search</label><input id="historySearch" placeholder="Name, mobile, booking ID ya bill number" oninput="renderHistory()">
+<div class="grid2"><button class="btn outline" onclick="clearHistoryDateFilter()">↻ ALL DAYS</button><button class="btn gold" onclick="setHistoryToday()">📅 TODAY</button></div>
+<div id="historySummary" class="muted" style="margin:10px 0"></div>
+<h3>Completed Bills</h3><div id="historyList"></div>
+<h3 style="margin-top:18px">Bookings / Pending / Cancelled</h3><div id="bookingHistoryList"></div>
+<button class="btn danger mini" onclick="clearBillHistory()">Delete All Bill History</button>
+<button class="btn outline" onclick="go('home')">← Back Home</button></div>
+</div>
+</section>
+</div>
+<nav class="bottom">
+<button onclick="go('home')"><span>🏠</span>Home</button>
+<button onclick="newBooking()"><span>＋</span>New</button><button onclick="go('fleet')"><span>🚘</span>Fleet</button>
+<button onclick="go('customers')"><span>👤</span>Customers</button>
+<button onclick="go('accounts')"><span>💰</span>Accounts</button>
+<button onclick="go('bookingManager');renderBookingManager()"><span>📅</span>Bookings</button><button onclick="go('history')"><span>🧾</span>History</button>
+</nav>
+<div id="toast" class="toast"></div>
+
+<script>
+const DRIVER={"1to4":{min:240,base:600,label:"1–4 Hours"},one:{min:240,base:600,label:"1–4 Hours"},8:{min:480,base:800,label:"8 Hours"},10:{min:600,base:1000,label:"10 Hours"},12:{min:720,base:1200,label:"12 Hours"},outstation:{min:0,base:1500,label:"Outstation"}};
+const CAR={Dzire:{name:"Maruti Suzuki Dzire",rent:1200,local:11,out:13},Ertiga:{name:"Maruti Suzuki Ertiga",rent:1500,local:11,out:15},Innova:{name:"Toyota Innova",rent:1500,local:11,out:15},Crysta:{name:"Innova Crysta",rent:2000,local:14,out:20},Scorpio:{name:"Mahindra Scorpio",rent:1500,local:11,out:15},Toofan:{name:"Toofan",rent:2400,local:18,out:23},TT17:{name:"Tempo Traveller 17 Seater",rent:0,local:25,out:25},TT20:{name:"Tempo Traveller 20 Seater",rent:0,local:30,out:30},TT24:{name:"Tempo Traveller 24 Seater",rent:0,local:35,out:35}};
+let service="driver",active=null,lastBill=null,lastBooking=null,timerInterval=null;
+const $=id=>document.getElementById(id);
+function nowLocal(){let d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)}
+function localDateKey(value=new Date()){let d=value instanceof Date?new Date(value):new Date(value);if(Number.isNaN(d.getTime()))return null;return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function money(n){return "₹"+Number(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function toast(t){let e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(window.__toast);window.__toast=setTimeout(()=>e.style.display="none",2400)}
+function load(k,f){try{return JSON.parse(localStorage.getItem(k)||f)}catch(e){return JSON.parse(f)}}
+let __syncTimer=null,__syncBusy=false,__syncQueued=false,__syncRetry=0;
+function syncSnapshot(){let data={};Object.keys(localStorage).forEach(k=>{if(k!=="shubhSyncUrl"&&k!=="shubhSyncLast"&&k!=="shubhSyncSecret")data[k]=load(k,"null")});return data}
+function setSyncStatus(t){let e=$("syncStatus");if(e)e.textContent=t}
+function queueSync(){clearTimeout(__syncTimer);let url=localStorage.getItem("shubhSyncUrl");if(!url)return;__syncQueued=true;__syncTimer=setTimeout(()=>syncNow(true),900)}
+async function syncNow(silent=false){let url=localStorage.getItem("shubhSyncUrl")||$("syncUrl")?.value.trim();let secret=localStorage.getItem("shubhSyncSecret")||$("syncSecret")?.value.trim()||"";if(!url){if(!silent)toast("Pehle Google Apps Script URL save karo.");return}if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec/.test(url)){if(!silent)toast("Google Apps Script Web App URL invalid hai.");return}if(__syncBusy){__syncQueued=true;return}__syncBusy=true;__syncQueued=false;localStorage.setItem("shubhSyncUrl",url);setSyncStatus("☁️ Cloud save…");try{await fetch(url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({source:"Shubh Tour & Travels App",device:navigator.userAgent.includes("Android")?"android":"laptop",updatedAt:new Date().toISOString(),secret,data:syncSnapshot()})});localStorage.setItem("shubhSyncLast",new Date().toISOString());__syncRetry=0;setSyncStatus("Cloud saved: "+new Date().toLocaleString("en-IN")+" ✓");if(!silent)toast("☁️ Cloud backup saved.")}catch(e){console.error(e);__syncRetry=Math.min(__syncRetry+1,5);setSyncStatus("Cloud save pending — internet check karo");if(!silent)toast("Cloud save pending.");if(__syncRetry<5)setTimeout(()=>syncNow(true),Math.min(30000,2000*__syncRetry));}finally{__syncBusy=false;if(__syncQueued)queueSync()}}
+function syncPull(silent=false){return new Promise((resolve,reject)=>{let url=localStorage.getItem("shubhSyncUrl")||$("syncUrl")?.value.trim(),secret=localStorage.getItem("shubhSyncSecret")||$("syncSecret")?.value.trim()||"";if(!url){if(!silent)toast("Cloud sync configure nahi hai.");return reject(new Error("no url"))}let cb="__shubhCloud_"+Date.now();let script=document.createElement("script");let timer=setTimeout(()=>{cleanup();if(!silent)toast("Cloud data load nahi hua.");reject(new Error("timeout"))},15000);function cleanup(){clearTimeout(timer);delete window[cb];script.remove()}window[cb]=(payload)=>{cleanup();if(!payload||!payload.ok){if(!silent)toast(payload?.error||"Cloud data unavailable.");return reject(new Error(payload?.error||"cloud error"))}if(payload.data&&typeof payload.data==="object"){Object.keys(localStorage).forEach(k=>{if(k!=="shubhSyncUrl"&&k!=="shubhSyncSecret"&&k!=="shubhSyncLast")localStorage.removeItem(k)});Object.entries(payload.data).forEach(([k,v])=>localStorage.setItem(k,JSON.stringify(v)));localStorage.setItem("shubhSyncLast",payload.updatedAt||new Date().toISOString());setSyncStatus("Cloud loaded: "+new Date(payload.updatedAt||Date.now()).toLocaleString("en-IN")+" ✓");if(!silent){renderHome();populateAssignmentSelects();renderCustomers();toast("☁️ Cloud data loaded.")}resolve(payload)}};script.src=url+"?action=get&secret="+encodeURIComponent(secret)+"&callback="+encodeURIComponent(cb)+"&_="+Date.now();script.async=true;script.onerror=()=>{cleanup();if(!silent)toast("Cloud connection failed.");reject(new Error("load failed"))};document.head.appendChild(script)})}
+function saveSyncSettings(){let url=$("syncUrl").value.trim(),secret=$("syncSecret").value.trim();if(!url){toast("Google Apps Script URL dalo.");return}localStorage.setItem("shubhSyncUrl",url);localStorage.setItem("shubhSyncSecret",secret);toast("Sync settings saved. Ab se data automatically backup hoga.");syncNow()}
+function loadSyncSettings(){const DEFAULT_SYNC_URL="https://script.google.com/macros/s/AKfycbzyCvsVu24Fs92U32Bh2feH8kQ_qy_Jd6PzNwYt02FSbt8aRRQel0D0cQKkLA-TtaRQ/exec";const DEFAULT_SYNC_SECRET="chouhans1781996";if(!localStorage.getItem("shubhSyncUrl"))localStorage.setItem("shubhSyncUrl",DEFAULT_SYNC_URL);if(!localStorage.getItem("shubhSyncSecret"))localStorage.setItem("shubhSyncSecret",DEFAULT_SYNC_SECRET);let u=localStorage.getItem("shubhSyncUrl")||"",sec=localStorage.getItem("shubhSyncSecret")||"";if($("syncUrl"))$("syncUrl").value=u;if($("syncSecret"))$("syncSecret").value=sec;let l=localStorage.getItem("shubhSyncLast");if(l)setSyncStatus("Last sync: "+new Date(l).toLocaleString("en-IN")+" • Auto-saved ✓")}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v));queueSync()}
+function removeAndSync(k){localStorage.removeItem(k);queueSync()}
+let navStack=["home"], navHandlingPop=false;
+function go(page, opts={}){
+  if(!$(page)) return;
+  if(!opts.fromPop && !navHandlingPop){
+    const current=navStack[navStack.length-1];
+    if(current!==page) navStack.push(page);
+    history.pushState({shubhPage:page}, "", "#"+page);
+  }
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  $(page).classList.add("active");
+  if(page==="customers")renderCustomers();
+  if(page==="vendors")renderVendors();
+  if(page==="drivers")renderDrivers();
+  if(page==="fleet")openFleet();
+  if(page==="history")renderHistory();
+  if(page==="accounts"){fillAccountSelects(accountType);$("ledgerDate").value=new Date().toISOString().slice(0,10);renderAccounts()}
+  if(page==="home")renderHome();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+window.addEventListener("popstate",()=>{
+  if(navStack.length>1){
+    navStack.pop();
+    const page=navStack[navStack.length-1]||"home";
+    navHandlingPop=true; go(page,{fromPop:true}); navHandlingPop=false;
+  }else{
+    history.pushState({shubhPage:"home"},"","#home");
+    go("home",{fromPop:true});
+  }
+});
+if(!location.hash){history.replaceState({shubhPage:"home"},"","#home");}
+else{const initial=location.hash.slice(1);if($(initial)){navStack=[initial];}else{history.replaceState({shubhPage:"home"},"","#home");}}
+function setService(s){service=s;$("driverBtn").classList.toggle("active",s==="driver");$("carBtn").classList.toggle("active",s==="car");$("driverOptions").classList.toggle("hidden",s!=="driver");$("carOptions").classList.toggle("hidden",s!=="car");setDutyFields()}
+
+function populateAssignmentSelects(){
+ let ds=load("shubhDrivers","[]"),vs=load("shubhVendors","[]");
+ if($("assignedDriver"))$("assignedDriver").innerHTML='<option value="">Select saved driver</option>'+ds.map((d,i)=>`<option value="${i}">${escapeHtml(d.name)} • ${escapeHtml(d.phone)}</option>`).join("");
+ if($("carAssignedDriver"))$("carAssignedDriver").innerHTML='<option value="">Select saved driver</option>'+ds.map((d,i)=>`<option value="${i}">${escapeHtml(d.name)} • ${escapeHtml(d.phone)}</option>`).join("");
+ if($("assignedVendor"))$("assignedVendor").innerHTML='<option value="">Select saved vendor</option>'+vs.map((v,i)=>`<option value="${i}">${escapeHtml(v.name)} • ${escapeHtml(v.vehicle||"Vehicle")}</option>`).join("");
+}
+function fillAccountSelects(type){
+ let key=peopleKey(type),list=load(key,"[]");
+ $("ledgerPerson").innerHTML='<option value="">Select '+(type==="driver"?"driver":"vendor")+'</option>'+list.map((p,i)=>`<option value="${i}">${escapeHtml(p.name)} • ${escapeHtml(p.phone)}</option>`).join("");
+}
+function useShareCustomer(){
+ let i=$("shareCustomerSelect").value,c=load("shubhCustomers","[]")[i];
+ if(c){$("shareCustomerName").value=c.name;$("shareCustomerPhone").value=c.phone;updateDriverMessagePreview();}
+}
+function populateShareCustomers(){
+ let list=load("shubhCustomers","[]");
+ $("shareCustomerSelect").innerHTML='<option value="">Select saved customer</option>'+list.map((c,i)=>`<option value="${i}">${escapeHtml(c.name)} • ${escapeHtml(c.phone)}</option>`).join("");
+}
+function newBooking(){if(active){toast("Active duty chal rahi hai. Pehle usko complete karo.");go("duty");return}resetForm();populateAssignmentSelects();go("booking")}
+function resetForm(){customerName.value="";customerPhone.value="";customerSearch.value="";if($('bookingReferralCode'))$('bookingReferralCode').value="";startKm.value="";if($('driverPackage'))$('driverPackage').value="";$("startAt").value=nowLocal();$("suggestions").innerHTML="";if($("assignedDriver"))$("assignedDriver").value="";if($("assignedVendor"))$("assignedVendor").value="";if($("newBookingDriverBox"))$("newBookingDriverBox").classList.add("hidden");["newBookingDriverName","newBookingDriverPhone","newBookingDriverLicense","bookingVehicleNo"].forEach(id=>{if($(id))$(id).value=""});}
+
+
+let shareMode="saved";
+function setShareMode(mode){
+ shareMode=mode;
+ $("savedDriverBtn").classList.toggle("active",mode==="saved");$("manualDriverBtn").classList.toggle("active",mode==="manual");
+ $("savedDriverShare").classList.toggle("hidden",mode!=="saved");$("manualDriverShare").classList.toggle("hidden",mode!=="manual");
+ updateDriverMessagePreview();
+}
+function openDriverShare(){
+ let list=load("shubhDrivers","[]");populateShareCustomers();
+ $("shareDriverSelect").innerHTML='<option value="">Select driver</option>'+list.map((d,i)=>`<option value="${i}">${escapeHtml(d.name)} • ${escapeHtml(d.phone)}</option>`).join("");
+ $("shareCustomerName").value="";$("shareCustomerPhone").value="";
+ setShareMode("saved");updateDriverMessagePreview();go("shareDriver");
+}
+
+function openDriverShareFor(i){
+ openDriverShare();
+ $("shareDriverSelect").value=String(i);
+ fillShareDriver();
+}
+function fillShareDriver(){
+ let i=$("shareDriverSelect").value,list=load("shubhDrivers","[]"),d=list[i];
+ if(d){$("shareCustomerName").focus();toast("Driver selected.");}
+ updateDriverMessagePreview();
+}
+function getShareDriver(){
+ if(shareMode==="manual")return {name:$("manualDriverName").value.trim(),phone:$("manualDriverPhone").value.replace(/\D/g,""),vehicle:$("manualVehicle").value.trim(),vehicleNo:$("manualVehicleNo").value.trim()};
+ let i=$("shareDriverSelect").value,d=load("shubhDrivers","[]")[i];return d||{};
+}
+function driverMessage(){
+ let d=getShareDriver(),cn=$("shareCustomerName").value.trim(),cp=normalizeWhatsAppNumber($("shareCustomerPhone").value);
+ if(!d.name||!d.phone){toast("Driver name aur driver phone complete karo.");return null}
+ let vehiclePart="";
+ if(d.vehicle)vehiclePart+="\n🚗 Vehicle: "+d.vehicle;
+ if(d.vehicleNo)vehiclePart+="\n🔢 Vehicle No.: "+d.vehicleNo;
+ let msg=`*SHUBH TOUR & TRAVELS*\n*DRIVER DETAILS*\n\nHello${cn?" "+cn:""},\n\nYour assigned driver details are below:\n\n👨‍✈️ *Driver:* ${d.name}\n📞 *Driver Contact:* ${d.phone}${vehiclePart}\n\n*Ride with Trust • Travel with Shubh*\nThank you for choosing Shubh. We look forward to serving you again.\n\n📞 6265584095 / 9893772425`;
+ return {msg,phone:cp};
+}
+function updateDriverMessagePreview(){
+ let d=getShareDriver(),cn=$("shareCustomerName").value.trim();
+ if(d.name){$("driverMessagePreview").textContent=`Driver: ${d.name} • Contact: ${d.phone}${d.vehicle?" • Vehicle: "+d.vehicle:""}${d.vehicleNo?" • No.: "+d.vehicleNo:""}`;}
+ else $("driverMessagePreview").textContent="Driver select karo ya manual details bharo.";
+}
+
+function normalizePhone(v){return String(v||"").replace(/[^0-9+]/g,"")}
+function normalizeWhatsAppNumber(v){let p=String(v||"").replace(/\D/g,"");if(p.length===10)p="91"+p;else if(p.length===11&&p[0]==="0")p="91"+p.slice(1);return p}
+function contactLinks(phone){let p=cleanDial(phone),wa=normalizeWhatsAppNumber(phone);return {tel:"tel:"+p,sms:"sms:"+p,wa:"https://wa.me/"+wa}}
+function cleanDial(phone){return String(phone||"").replace(/[^0-9+]/g,"")}
+function callPerson(phone){let p=cleanDial(phone);if(!p){toast("Phone number missing.");return}window.location.href="tel:"+p}
+function smsPerson(phone){let p=cleanDial(phone);if(!p){toast("Phone number missing.");return}window.location.href="sms:"+p}
+function waPerson(phone){let p=normalizeWhatsAppNumber(phone);if(!p){toast("Phone number missing.");return}window.location.href="https://wa.me/"+p}
+
+function handleAndroidContacts(type,contacts){
+ try{
+  let key=peopleKey(type),list=load(key,"[]"),added=0;
+  (contacts||[]).forEach(c=>{let name=String(c.name||"").trim(),tel=normalizePhone(c.tel||"");if(!name||!tel)return;let idx=list.findIndex(x=>normalizePhone(x.phone)===tel);
+   if(type==="vendor"){let obj={name,phone:tel,vehicle:"",vehicleNo:"",note:"",updatedAt:Date.now(),importedFromContacts:true};if(idx>=0)list[idx]={...list[idx],name,phone:tel,updatedAt:Date.now()};else{list.unshift(obj);added++;}}
+   else{let obj={name,phone:tel,license:"",updatedAt:Date.now(),importedFromContacts:true};if(idx>=0)list[idx]={...list[idx],name,phone:tel,updatedAt:Date.now()};else{list.unshift(obj);added++;}}
+  });
+  save(key,list.slice(0,500)); type==="vendor"?renderVendors():renderDrivers(); toast(`${added} new ${type}${added===1?"":"s"} imported from phone contacts.`);
+ }catch(e){console.error(e);toast("Phone contacts import failed.");}
+}
+function importCustomerContacts(){return importPhoneContacts("customer")}
+async function importPhoneContacts(type){
+ window.__pendingContactType=type;
+ if(window.AndroidBridge&&AndroidBridge.importContacts){AndroidBridge.importContacts(type);return}
+ if(!("contacts" in navigator)&&!("ContactsManager" in window)){toast("Is browser me phone Contact Picker available nahi hai. Android app me permission do.");return}
+ try{
+  const props=["name","tel"];
+  const opts={multiple:true};
+  const contacts=await navigator.contacts.select(props,opts);
+  if(!contacts||!contacts.length){toast("Koi contact select nahi kiya.");return}
+  let key=peopleKey(type),list=load(key,"[]"),added=0;
+  contacts.forEach(c=>{
+   let name=Array.isArray(c.name)?c.name[0]:(c.name||"");
+   let tel=Array.isArray(c.tel)?c.tel[0]:(c.tel||"");
+   tel=normalizePhone(tel);
+   if(!name||!tel)return;
+   let idx=list.findIndex(x=>normalizePhone(x.phone)===tel);
+   if(type==="vendor"){
+    let obj={name,phone:tel,vehicle:"",vehicleNo:"",note:"",updatedAt:Date.now(),importedFromContacts:true};
+    if(idx>=0)list[idx]={...list[idx],name,phone:tel,updatedAt:Date.now()};
+    else{list.unshift(obj);added++}
+   }else{
+    let obj={name,phone:tel,license:"",vehicle:"",status:"Active",updatedAt:Date.now(),importedFromContacts:true};
+    if(idx>=0)list[idx]={...list[idx],name,phone:tel,updatedAt:Date.now()};
+    else{list.unshift(obj);added++}
+   }
+  });
+  save(key,list.slice(0,500));
+  type==="vendor"?renderVendors():renderDrivers();
+  toast(`${added} new ${type}${added===1?"":"s"} imported. Existing contacts updated.`);
+ }catch(e){
+  if(e.name==="AbortError")return;
+  toast("Phone contacts import permission/browser issue. Android Chrome me try karo.");
+ }
+}
+function shareDriverMessage(){
+ let x=driverMessage();if(!x)return;
+ if(navigator.share){navigator.share({title:"Shubh Tour & Travels — Driver Details",text:x.msg}).catch(()=>{})}
+ else{navigator.clipboard?.writeText(x.msg);toast("Message copied. WhatsApp me paste kar sakte ho.")}
+}
+function whatsappDriverMessage(){
+ let x=driverMessage();if(!x)return;
+ let p=normalizeWhatsAppNumber(x.phone);
+ if(!p){toast("Customer WhatsApp number dalo.");return}
+ location.href=`https://wa.me/${p}?text=${encodeURIComponent(x.msg)}`;
+}
+function copyDriverMessage(){
+ let x=driverMessage();if(!x)return;
+ navigator.clipboard?.writeText(x.msg).then(()=>toast("Driver message copied."));
+}
+function peopleKey(type){return type==="vendor"?"shubhVendors":"shubhDrivers"}
+function openPersonForm(type,editIndex=null){
+ let key=peopleKey(type),list=load(key,"[]"),p=editIndex===null?null:list[editIndex],form=$(type==="vendor"?"vendorForm":"driverForm");
+ form.classList.remove("hidden");
+ if(type==="vendor"){
+  form.innerHTML=`<div class="card" style="margin-top:10px"><div class="formTitle">${p?"Update":"Add"} Vendor</div>
+  <label>Vendor / Owner Name</label><input id="pfName" value="${p?escapeHtml(p.name):""}" placeholder="Vendor name">
+  <div class="grid2"><div><label>WhatsApp / Phone</label><input id="pfPhone" value="${p?escapeHtml(p.phone):""}" inputmode="numeric" placeholder="91xxxxxxxxxx"></div><div><label>Vehicle Number</label><input id="pfVehicleNo" value="${p?escapeHtml(p.vehicleNo||""):""}" placeholder="CG04 XX 0000"></div></div>
+  <label>Vehicle</label><input id="pfVehicle" value="${p?escapeHtml(p.vehicle||""):""}" placeholder="Dzire / Ertiga / Innova / Crysta...">
+  <label>Rate / Note</label><input id="pfNote" value="${p?escapeHtml(p.note||""):""}" placeholder="Vendor rate, agreement, etc.">
+  <button class="btn green" onclick="savePerson('vendor',${editIndex===null?"null":editIndex})">SAVE VENDOR</button>
+  <button class="btn outline" onclick="closePersonForm('vendor')">Cancel</button></div>`;
+ }else{
+  form.innerHTML=`<div class="card" style="margin-top:10px"><div class="formTitle">${p?"Update":"Add"} Driver</div>
+  <label>Driver Name</label><input id="pfName" value="${p?escapeHtml(p.name):""}" placeholder="Driver name">
+  <div class="grid2"><div><label>WhatsApp / Phone</label><input id="pfPhone" value="${p?escapeHtml(p.phone):""}" inputmode="numeric" placeholder="91xxxxxxxxxx"></div></div>
+  <label>License No. (Optional)</label><input id="pfLicense" value="${p?escapeHtml(p.license||""):""}" placeholder="Optional">
+  <button class="btn green" onclick="savePerson('driver',${editIndex===null?"null":editIndex})">SAVE DRIVER</button>
+  <button class="btn outline" onclick="closePersonForm('driver')">Cancel</button></div>`;
+ }
+}
+function closePersonForm(type){$(type==="vendor"?"vendorForm":"driverForm").classList.add("hidden")}
+function savePerson(type,index){
+ let key=peopleKey(type),list=load(key,"[]"),name=$("pfName").value.trim(),phone=$("pfPhone").value.replace(/\D/g,"");
+ if(!name||!phone){toast("Name aur phone number zaroori hai.");return}
+ let obj={name,phone,updatedAt:Date.now()};
+ if(type==="vendor"){obj.vehicleNo=$("pfVehicleNo").value.trim();obj.vehicle=$("pfVehicle").value.trim();obj.note=$("pfNote").value.trim()}
+ else {obj.license=$("pfLicense").value.trim();obj.status="Active"}
+ if(index===null) list.unshift(obj); else list[index]={...list[index],...obj};
+ save(key,list);closePersonForm(type);type==="vendor"?renderVendors():renderDrivers();toast((index===null?"Added ":"Updated ")+(type==="vendor"?"vendor.":"driver."));
+}
+function deletePerson(type,index){
+ let key=peopleKey(type),list=load(key,"[]"),name=list[index]?.name||"";
+ if(!confirm(`${name} ko ${type} list se delete karna hai?`))return;
+ list.splice(index,1);save(key,list);type==="vendor"?renderVendors():renderDrivers();toast("Record deleted.");
+}
+function renderVendors(){
+ let list=load("shubhVendors","[]");
+ $("vendorList").innerHTML=list.length?list.map((v,i)=>`<div class="personCard"><div class="personHead"><div class="personAvatar">V</div><div class="personInfo"><b>${escapeHtml(v.name)}</b><small>📱 ${escapeHtml(v.phone)}</small></div></div><span class="tag">🚗 ${escapeHtml(v.vehicle||"Vehicle not set")}</span><span class="tag">🔢 ${escapeHtml(v.vehicleNo||"No. not set")}</span>${v.note?`<span class="tag">📝 ${escapeHtml(v.note)}</span>`:""}<div class="personActions"><a class="btn callBtn mini" href="tel:${encodeURIComponent(v.phone)}">📞 Call</a><a class="btn msgBtn mini" href="sms:${encodeURIComponent(v.phone)}">💬 SMS</a><a class="btn waBtn mini" target="_blank" rel="noopener" href="https://wa.me/${normalizeWhatsAppNumber(v.phone)}">WhatsApp</a></div><div class="personActions"><button class="btn outline mini" onclick="openPersonForm('vendor',${i})">Edit</button><button class="btn danger mini" onclick="deletePerson('vendor',${i})">Delete</button></div></div>`).join(""):`<div class="empty"><b>No vendors added</b>Add your first vehicle vendor.</div>`;
+}
+function renderDrivers(){
+ let list=load("shubhDrivers","[]");
+ $("driverList").innerHTML=list.length?list.map((d,i)=>{
+   let lic=d.license?`<span class="tag">🪪 License: ${escapeHtml(d.license)}</span>`:`<span class="tag">🪪 License: Optional / not added</span>`;
+   return `<div class="personCard"><div class="personHead"><div class="personAvatar">D</div><div class="personInfo"><b>${escapeHtml(d.name)}</b><small>📱 ${escapeHtml(d.phone)}</small></div></div>${lic}<div class="personActions"><a class="btn callBtn mini" href="tel:${encodeURIComponent(d.phone)}">📞 Call</a><a class="btn msgBtn mini" href="sms:${encodeURIComponent(d.phone)}">💬 SMS</a><a class="btn waBtn mini" target="_blank" rel="noopener" href="https://wa.me/${normalizeWhatsAppNumber(d.phone)}">WhatsApp</a></div><div class="personActions"><button class="btn gold mini" onclick="openDriverShareFor(${i})">📤 Share to Customer</button><button class="btn outline mini" onclick="openPersonForm('driver',${i})">Edit</button><button class="btn danger mini" onclick="deletePerson('driver',${i})">Delete</button></div></div>`;
+ }).join(""):`<div class="empty"><b>No drivers added</b>Add your first driver.</div>`;
+}
+
+let fleetKind="vendor";
+function fleetList(){return load("shubhFleet","[]")}
+function fleetToday(){return new Date().toISOString().slice(0,10)}
+function fleetStatus(x){if(x.status==="returned")return "returned";return x.returnDate&&x.returnDate<fleetToday()?"overdue":"out"}
+function formatDateOnly(v){if(!v)return "—";let d=new Date(v+"T00:00:00");return Number.isNaN(d.getTime())?String(v):d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})}
+function vehicleKey(v){let s=String(v||"").toLowerCase().replace(/[^a-z0-9]/g,"");if(s.includes("crysta"))return "Crysta";if(s.includes("dzire")||s.includes("desire"))return "Dzire";if(s.includes("ertiga"))return "Ertiga";if(s.includes("innova"))return "Innova";if(s.includes("scorpio"))return "Scorpio";if(s.includes("toofan"))return "Toofan";return String(v||"Other").trim()||"Other"}
+function setFleetKind(k){fleetKind=k;$("fleetVendorBtn").classList.toggle("active",k==="vendor");$("fleetDriverBtn").classList.toggle("active",k==="driver");$("fleetVendorFields").classList.toggle("hidden",k!=="vendor");$("fleetDriverFields").classList.toggle("hidden",k!=="driver");populateFleetPeople()}
+function populateFleetPeople(){let vs=load("shubhVendors","[]"),ds=load("shubhDrivers","[]");$("fleetVendorSelect").innerHTML='<option value="">Select vendor</option>'+vs.map((v,i)=>`<option value="${i}">${escapeHtml(v.name)} • ${escapeHtml(v.vehicle||"Vehicle")} • ${escapeHtml(v.phone)}</option>`).join("");$("fleetDriverSelect").innerHTML='<option value="">Select driver</option>'+ds.map((d,i)=>`<option value="${i}">${escapeHtml(d.name)} • ${escapeHtml(d.phone)}</option>`).join("")}
+function fillFleetVendor(){let v=load("shubhVendors","[]")[$("fleetVendorSelect").value];if(v){$("fleetVehicle").value=v.vehicle||"";$("fleetVehicleNo").value=v.vehicleNo||""}}
+function clearFleetForm(){["fleetVendorSelect","fleetDriverSelect","fleetLocation","fleetRate","fleetCustomer","fleetNote","fleetVehicle","fleetVehicleNo","fleetDriverVehicle","fleetDriverVehicleNo"].forEach(id=>{if($(id))$(id).value=""});$("fleetStartDate").value=fleetToday();$("fleetReturnDate").value=fleetToday()}
+function openFleet(){populateFleetPeople();clearFleetForm();renderFleet()}
+function startFleetForVendor(i){go("fleet");setFleetKind("vendor");$("fleetVendorSelect").value=String(i);fillFleetVendor();$("fleetLocation").focus()}
+function startFleetForDriver(i){go("fleet");setFleetKind("driver");$("fleetDriverSelect").value=String(i);$("fleetLocation").focus()}
+function saveFleetAssignment(){let person,vehicle="",vehicleNo="";if(fleetKind==="vendor"){person=load("shubhVendors","[]")[$("fleetVendorSelect").value];vehicle=$("fleetVehicle").value.trim();vehicleNo=$("fleetVehicleNo").value.trim()}else{person=load("shubhDrivers","[]")[$("fleetDriverSelect").value];vehicle=$("fleetDriverVehicle").value.trim();vehicleNo=$("fleetDriverVehicleNo").value.trim()}if(!person){toast(fleetKind==="vendor"?"Vendor select karo.":"Driver select karo.");return}let start=$("fleetStartDate").value,ret=$("fleetReturnDate").value,loc=$("fleetLocation").value.trim(),rate=Number($("fleetRate").value||0);if(!start||!ret||!loc){toast("Sent date, return date aur location zaroori hai.");return}if(ret<start){toast("Return date sent date se pehle nahi ho sakti.");return}let list=fleetList();if(list.some(x=>x.kind===fleetKind&&x.personPhone===person.phone&&x.status!=="returned")){toast("Ye person already trip par hai.");return}list.unshift({id:"FL-"+Date.now().toString(36).toUpperCase(),kind:fleetKind,personName:person.name,personPhone:person.phone,vehicle,vehicleNo,location:loc,startDate:start,returnDate:ret,rate,customer:$("fleetCustomer").value.trim(),note:$("fleetNote").value.trim(),status:"out",createdAt:Date.now(),updatedAt:Date.now()});save("shubhFleet",list.slice(0,1000));clearFleetForm();renderFleet();renderVendors();renderDrivers();toast("Deployment saved. Current report updated.")}
+function returnFleet(id){let list=fleetList(),x=list.find(a=>a.id===id);if(!x)return;x.status="returned";x.returnedAt=new Date().toISOString();x.updatedAt=Date.now();save("shubhFleet",list);renderFleet();renderVendors();renderDrivers();toast("Returned — vehicle/driver available.")}
+function deleteFleet(id){if(!confirm("Deployment record delete karna hai?"))return;save("shubhFleet",fleetList().filter(x=>x.id!==id));renderFleet();renderVendors();renderDrivers()}
+function fleetCard(x){let st=fleetStatus(x);return `<div class="fleetTrip ${st==="overdue"?"overdue":""}"><div class="fleetTripHead"><div><b>${x.kind==="vendor"?"🚗":"👨‍✈️"} ${escapeHtml(x.personName)}</b><small>${x.kind==="vendor"?"Vendor Vehicle":"Driver"} • ${escapeHtml(x.personPhone)}</small></div><span class="fleetStatus ${st}">${st==="overdue"?"RETURN OVERDUE":"ON TRIP"}</span></div><div class="fleetMeta"><div><span>VEHICLE</span><b>${escapeHtml(x.vehicle||"—")}</b></div><div><span>VEHICLE NO.</span><b>${escapeHtml(x.vehicleNo||"—")}</b></div><div><span>LOCATION</span><b>${escapeHtml(x.location||"—")}</b></div><div><span>RETURN</span><b>${formatDateOnly(x.returnDate)}</b></div><div><span>SENT</span><b>${formatDateOnly(x.startDate)}</b></div><div><span>RATE</span><b>${money(x.rate||0)}</b></div></div>${x.customer?`<div class="muted" style="margin-top:8px">👤 ${escapeHtml(x.customer)}</div>`:""}${x.note?`<div class="muted" style="margin-top:3px">📝 ${escapeHtml(x.note)}</div>`:""}<div class="fleetActions"><button class="btn green mini" onclick="returnFleet('${x.id}')">✓ Returned</button><a class="btn callBtn mini" href="tel:${encodeURIComponent(x.personPhone)}">📞 Call</a><button class="btn danger mini" onclick="deleteFleet('${x.id}')">Delete</button></div></div>`}
+function renderFleet(){let vs=load("shubhVendors","[]"),ds=load("shubhDrivers","[]"),all=fleetList(),activeTrips=all.filter(x=>x.status!=="returned"),overdue=activeTrips.filter(x=>fleetStatus(x)==="overdue");$("fleetTotalVendors").textContent=vs.length;$("fleetOut").textContent=activeTrips.length;$("fleetAvailable").textContent=Math.max(0,vs.length-activeTrips.filter(x=>x.kind==="vendor").length);let keys=["Dzire","Ertiga","Innova","Crysta","Scorpio","Toofan",...vs.map(v=>vehicleKey(v.vehicle))].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i),oldV=$("fleetVehicleFilter").value||"";$("fleetVehicleFilter").innerHTML='<option value="">All Vehicles</option>'+keys.map(k=>`<option value="${escapeHtml(k)}">${escapeHtml(k)}</option>`).join("");if(keys.includes(oldV))$("fleetVehicleFilter").value=oldV;let vf=$("fleetVehicleFilter").value||"",sf=$("fleetStatusFilter").value||"",q=($("fleetSearch").value||"").toLowerCase().trim();$("fleetVehicleCounts").innerHTML=keys.filter(k=>!vf||k===vf).map(k=>{let total=vs.filter(v=>vehicleKey(v.vehicle)===k).length,out=activeTrips.filter(x=>x.kind==="vendor"&&vehicleKey(x.vehicle)===k).length;return `<div class="fleetVehicle"><b>🚗 ${escapeHtml(k)}</b><small>${out} currently out</small><div class="count">${total}</div><small>total vendors</small></div>`}).join("")||'<div class="fleetEmpty" style="grid-column:1/-1">No vendor vehicle data yet.</div>';let vendorRows=vs.filter(v=>!vf||vehicleKey(v.vehicle)===vf).filter(v=>{let hay=(v.name+" "+v.phone+" "+v.vehicle+" "+v.vehicleNo).toLowerCase();return !q||hay.includes(q)});$("fleetVendorDirectory").innerHTML=vendorRows.length?vendorRows.map(v=>{let trip=activeTrips.find(x=>x.kind==="vendor"&&x.personPhone===v.phone);return `<div class="customer"><div class="avatar">V</div><div class="grow"><b>${escapeHtml(v.name)}</b><small>📱 ${escapeHtml(v.phone)} • 🚗 ${escapeHtml(v.vehicle||"Vehicle not set")} ${v.vehicleNo?"• "+escapeHtml(v.vehicleNo):""}</small><small>${trip?"🟠 Out: "+escapeHtml(trip.location||"—")+" • Return "+formatDateOnly(trip.returnDate):"🟢 Available"}</small></div><a class="btn callBtn mini" href="tel:${encodeURIComponent(v.phone)}">Call</a><a class="btn waBtn mini" href="https://wa.me/${normalizeWhatsAppNumber(v.phone)}">WhatsApp</a></div>`}).join(""):'<div class="fleetEmpty">No matching vendors.</div>';let filtered=activeTrips.filter(x=>{let st=fleetStatus(x),hay=(x.personName+" "+x.personPhone+" "+x.location+" "+x.vehicle+" "+x.vehicleNo+" "+x.customer).toLowerCase();return (!vf||vehicleKey(x.vehicle)===vf)&&(!sf||(sf===st))&&(!q||hay.includes(q))});$("fleetCurrentList").innerHTML=filtered.length?filtered.map(fleetCard).join(""):'<div class="fleetEmpty">No current deployment matches your filter.</div>';let vout=activeTrips.filter(x=>x.kind==="vendor").length,dout=activeTrips.filter(x=>x.kind==="driver").length;$("fleetReport").innerHTML=`<div class="fleetReportRow"><span>🚗 Vendor vehicles out</span><b>${vout}</b></div><div class="fleetReportRow"><span>👨‍✈️ Drivers out</span><b>${dout}</b></div><div class="fleetReportRow"><span>🟢 Available vendors</span><b>${Math.max(0,vs.length-vout)}</b></div><div class="fleetReportRow"><span>🟢 Available drivers</span><b>${Math.max(0,ds.length-dout)}</b></div><div class="fleetReportRow"><span>🔴 Return overdue</span><b>${overdue.length}</b></div><div class="fleetReportRow"><span>💰 Active rates</span><b>${money(activeTrips.reduce((s,x)=>s+Number(x.rate||0),0))}</b></div><div class="fleetReportRow"><span>📅 Updated</span><b>${new Date().toLocaleString("en-IN")}</b></div>`}
+// Enhanced vendor/driver cards: existing functions remain the same; fleet page is the source of current deployment truth.
+function customerSuggestions(){let q=$("customerSearch").value.toLowerCase().trim(),list=load("shubhCustomers","[]").filter(c=>(c.name+" "+c.phone).toLowerCase().includes(q)).slice(0,5);$("suggestions").innerHTML=list.map((c,i)=>`<button class="btn outline mini" onclick="useCustomer(${i})">${escapeHtml(c.name)} • ${escapeHtml(c.phone)}</button>`).join(" ")}
+function useCustomer(i){let q=$("customerSearch").value.toLowerCase().trim(),list=load("shubhCustomers","[]").filter(c=>(c.name+" "+c.phone).toLowerCase().includes(q)).slice(0,5),c=list[i];if(!c)return;$("customerName").value=c.name;$("customerPhone").value=c.phone;$("suggestions").innerHTML="";toast("Customer selected.")}
+
+function setDutyFields(){let isCar=service==="car";$("endCustomRateRow").classList.toggle("hidden",!isCar);$("endTollWrap").classList.toggle("hidden",!isCar);if(!isCar){$("endCustomKmRate").value="";$("endToll").value="0";}}
+function toggleNewBookingDriver(){
+ let box=$("newBookingDriverBox");if(!box)return;
+ box.classList.toggle("hidden");
+ if(!box.classList.contains("hidden")){$("assignedDriver").value="";$("newBookingDriverName").focus();}
+}
+function saveOrGetBookingDriver(){
+ if($("newBookingDriverBox") && !$("newBookingDriverBox").classList.contains("hidden")){
+   let name=$("newBookingDriverName").value.trim(),phone=$("newBookingDriverPhone").value.replace(/\D/g,""),license=$("newBookingDriverLicense").value.trim();
+   if(!name||!phone){toast("New driver ka name aur phone bharna zaroori hai.");return null}
+   let list=load("shubhDrivers","[]"),idx=list.findIndex(d=>String(d.phone).replace(/\D/g,"")===phone);
+   let obj={name,phone,license,status:"Active",updatedAt:Date.now(),importedFromBooking:true};
+   if(idx>=0)list[idx]={...list[idx],...obj};else list.unshift(obj);
+   save("shubhDrivers",list.slice(0,500));populateAssignmentSelects();
+   return obj;
+ }
+ let i=$("assignedDriver").value;
+ return i!==""?load("shubhDrivers","[]")[Number(i)]||null:null;
+}
+function sendCurrentBookingToDriver(){
+ if(!active||!active.assignedDriverPhone){toast("Is booking me driver assigned nahi hai.");return}
+ let msg=`*Shubh Tour & Travels — New Duty*\n\n👨‍✈️ Driver: ${active.assignedDriverName}\n👤 Customer: ${active.name}\n📞 Customer: ${active.phone}\n🗓️ Start: ${new Date(active.start).toLocaleString("en-IN")}\n📍 Start KM: ${active.startKm}\n🧾 Booking ID: ${active.id}\n\nPlease confirm the duty.\n\n*Ride with Trust • Travel with Shubh*`;
+ location.href="https://wa.me/"+String(active.assignedDriverPhone).replace(/\D/g,"")+"?text="+encodeURIComponent(msg);
+}
+function shareCurrentDriverToCustomer(){
+ if(!active||!active.assignedDriverPhone){toast("Driver assigned nahi hai.");return}
+ let vehiclePart=active.service==="car"?"\n🚗 Vehicle: "+(CAR[active.car]?.name||active.car)+"\n🔢 Vehicle No.: "+(active.bookingVehicleNo||"Not provided")+"\n":"";
+ let msg=`*SHUBH TOUR & TRAVELS*\n*DRIVER DETAILS*\n\nHello ${active.name},\n\nYour driver details for this booking:\n\n👨‍✈️ *Driver:* ${active.assignedDriverName}\n📞 *Driver Contact:* ${active.assignedDriverPhone}${vehiclePart}\n\n*Ride with Trust • Travel with Shubh*\n📞 6265584095 / 9893772425`;
+ location.href="https://wa.me/"+normalizeWhatsAppNumber(active.phone)+"?text="+encodeURIComponent(msg);
+}
+function getDriverPackageInfo(key,startDate){
+ let d=new Date(startDate),name="",charge=0,end="";
+ if(key==="one_time"){name="One Time Driver";charge=1000;end=d.toISOString();}
+ else if(key==="six_month"){name="6 Month Driver Package";charge=2000;let e=new Date(d);e.setMonth(e.getMonth()+6);e.setDate(e.getDate()-1);end=e.toISOString();}
+ return {name,charge,joiningDate:key?d.toISOString():"",serviceEndDate:end};
+}
+function saveDriverPackageRecord(source){
+ if(!source||!source.packageKey||!source.phone||!source.driverPhone)return null;
+ let list=load("shubhDriverAssignments","[]"),existing=list.findIndex(x=>x.bookingId===source.id);
+ let rec={id:existing>=0?list[existing].id:"DA-"+Date.now().toString(36).toUpperCase(),bookingId:source.id,customerName:source.name,customerPhone:source.phone,driverName:source.driverName,driverPhone:source.driverPhone,driverLicense:source.driverLicense||"",packageKey:source.packageKey,packageName:source.packageName,packageCharge:Number(source.packageCharge||0),joiningDate:source.joiningDate||source.start,serviceEndDate:source.serviceEndDate||source.start,status:"active",updatedAt:Date.now(),createdAt:existing>=0?list[existing].createdAt:Date.now()};
+ if(existing>=0)list[existing]={...list[existing],...rec};else list.unshift(rec);
+ save("shubhDriverAssignments",list.slice(0,1000));
+ return rec;
+}
+function findLatestDriverPackage(phone){
+ let list=load("shubhDriverAssignments","[]").filter(x=>String(x.customerPhone||"").replace(/\D/g,"")===String(phone||"").replace(/\D/g,""));
+ return list.sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt))[0]||null;
+}
+function loyaltyAccount(phone,name){
+ let p=String(phone||"").replace(/\D/g,""); if(!p)return null;
+ let list=load("shubhLoyaltyAccounts","[]"),i=list.findIndex(x=>String(x.phone||"").replace(/\D/g,"")===p),a=i>=0?list[i]:{id:"LC-"+Date.now().toString(36).toUpperCase(),phone:p,name:name||"Customer",stamps:0,rewardUnlocked:false,totalCompleted:0,updatedAt:Date.now(),createdAt:Date.now()};
+ if(name)a.name=name;
+ if(i<0)list.unshift(a); else list[i]=a;
+ save("shubhLoyaltyAccounts",list.slice(0,1000));
+ return a;
+}
+function rebuildLoyaltyForCustomer(phone,name){
+ let p=String(phone||"").replace(/\D/g,""); if(!p)return null;
+ let bills=load("shubhBills","[]").filter(b=>String(b.phone||"").replace(/\D/g,"")===p);
+ let bookings=load("shubhBookings","[]").filter(b=>String(b.phone||"").replace(/\D/g,"")===p&&b.completedAt&&!b.cancelledAt);
+ let seen=new Set(),completed=[];
+ // Count each completed booking once. A final bill linked to a booking must not create a second stamp.
+ bookings.forEach(b=>{
+   let key=String(b.id||b.bookingId||"");
+   if(!key||seen.has(key))return;
+   seen.add(key); completed.push(b);
+ });
+ bills.forEach(b=>{
+   let key=String(b.bookingId||b.id||b.billNo||"");
+   if(!key||seen.has(key))return;
+   seen.add(key); completed.push(b);
+ });
+ completed.sort((a,b)=>new Date(a.completedAt||a.end||a.createdAt||0)-new Date(b.completedAt||b.end||b.createdAt||0));
+ let a=loyaltyAccount(p,name||completed.at(-1)?.name||"Customer");
+ if(!a)return null;
+ a.totalCompleted=completed.length;
+ a.stamps=Math.min(5,completed.length);
+ a.rewardUnlocked=completed.length>=5;
+ let last=completed.at(-1);
+ if(last){a.lastCompletedAt=new Date(last.completedAt||last.end||last.createdAt||Date.now()).getTime();a.lastBookingId=last.bookingId||last.id;}
+ a.updatedAt=Date.now();
+ let accounts=load("shubhLoyaltyAccounts","[]"),i=accounts.findIndex(x=>String(x.phone||"").replace(/\D/g,"")===p);
+ if(i>=0)accounts[i]=a;else accounts.unshift(a);
+ save("shubhLoyaltyAccounts",accounts.slice(0,1000));
+ return a;
+}
+function awardLoyaltyForCompletedRide(source){
+ if(!source||!source.phone)return null;
+ let key=source.bookingId||source.id||source.billNo; if(!key)return null;
+ let tx=load("shubhLoyaltyTransactions","[]");
+ if(tx.some(x=>x.completionKey===key))return loyaltyAccount(source.phone,source.name);
+ let a=loyaltyAccount(source.phone,source.name); if(!a)return null;
+ a.stamps=Number(a.stamps||0)+1; a.totalCompleted=Number(a.totalCompleted||0)+1;
+ if(a.stamps>=5){a.stamps=5;a.rewardUnlocked=true;}
+ a.lastCompletedAt=Date.now();a.lastBookingId=source.bookingId||source.id; a.updatedAt=Date.now();
+ let accounts=load("shubhLoyaltyAccounts","[]"),i=accounts.findIndex(x=>x.id===a.id);if(i>=0)accounts[i]=a;else accounts.unshift(a);save("shubhLoyaltyAccounts",accounts.slice(0,1000));
+ tx.unshift({id:"LT-"+Date.now().toString(36).toUpperCase(),completionKey:key,customerPhone:a.phone,customerName:a.name,bookingId:source.bookingId||source.id,stampAdded:1,createdAt:Date.now()});save("shubhLoyaltyTransactions",tx.slice(0,3000));
+ return a;
+}
+function loyaltyMessage(a,source){
+ let stars="";for(let i=1;i<=5;i++)stars+=i<=Number(a?.stamps||0)?"⭐":"☆";
+ return `*SHUBH TOUR & TRAVELS & DRIVER SERVICES*\n*⭐ LOYALTY CARD*\n\n👤 *Customer:* ${source?.name||a?.name||"Customer"}\n🧾 *Completed Booking:* ${source?.bookingId||source?.id||"—"}\n📅 *Completed On:* ${new Date(source?.completedAt||Date.now()).toLocaleDateString("en-IN")}\n\n${stars}\n*${Number(a?.stamps||0)}/5 STAMPS*\n\n${a?.rewardUnlocked?"🎁 *REWARD UNLOCKED: ₹100 OFF on next eligible booking*":"Complete 5 bookings and get ₹100 OFF on the next eligible booking."}\n\nThank you for choosing us.\n*Ride with Trust • Travel with Shubh*\n📞 6265584095 / 9893772425`;
+}
+function driverPackageMessage(rec){
+ return `*SHUBH TOUR & TRAVELS & DRIVER SERVICES*\n*👨‍✈️ PERMANENT DRIVER SERVICE*\n\n👤 *Customer:* ${rec.customerName}\n👨‍✈️ *Driver:* ${rec.driverName}\n📞 *Driver Mobile:* ${rec.driverPhone}\n📦 *Package:* ${rec.packageName}\n💰 *Package Charge:* ${money(rec.packageCharge)}\n📅 *Joining Date:* ${new Date(rec.joiningDate).toLocaleDateString("en-IN")}\n📅 *Service End Date:* ${new Date(rec.serviceEndDate).toLocaleDateString("en-IN")}\n🟢 *Status:* ${rec.status||"ACTIVE"}\n\n*Ride with Trust • Travel with Shubh*\n📞 6265584095 / 9893772425`;
+}
+function shareWhatsAppText(phone,msg){let p=normalizeWhatsAppNumber(phone);if(!p){toast("Customer WhatsApp number missing.");return}location.href="https://wa.me/"+p+"?text="+encodeURIComponent(msg)}
+async function loyaltyCardBlob(a,source){
+ let W=1080,H=700,c=document.createElement("canvas"),x=c.getContext("2d");c.width=W;c.height=H;
+ x.fillStyle="#07152b";x.fillRect(0,0,W,H);x.fillStyle="#f3b719";x.fillRect(0,0,W,18);x.fillRect(0,H-18,W,18);
+ x.fillStyle="#f3b719";x.font="900 54px Arial";x.fillText("SHUBH",55,90);x.fillStyle="#fff";x.font="900 30px Arial";x.fillText("TOUR & TRAVELS & DRIVER SERVICES",55,135);
+ x.fillStyle="#fff";x.font="900 42px Arial";x.fillText("⭐ LOYALTY CARD",55,215);
+ x.font="700 30px Arial";x.fillText("Customer: "+String(source?.name||a?.name||"Customer"),55,275);
+ x.font="24px Arial";x.fillText("Completed Booking: "+String(source?.bookingId||source?.id||"—"),55,315);
+ x.fillStyle="#f3b719";x.font="900 68px Arial";let stars="";for(let i=1;i<=5;i++)stars+=i<=Number(a?.stamps||0)?"★":"☆";x.fillText(stars,55,415);
+ x.fillStyle="#fff";x.font="900 34px Arial";x.fillText(Number(a?.stamps||0)+" / 5 STAMPS",55,470);
+ x.font="700 25px Arial";x.fillText(a?.rewardUnlocked?"🎁 ₹100 OFF unlocked for next eligible booking":"Complete 5 bookings → ₹100 OFF on next eligible booking",55,525);
+ x.font="20px Arial";x.fillText("Ride with Trust • Travel with Shubh",55,605);x.fillText("6265584095 / 9893772425",55,640);
+ return await new Promise(r=>c.toBlob(r,"image/png",1));
+}
+async function shareLoyaltyCard(phone,source){
+ let account=rebuildLoyaltyForCustomer(phone,source?.name)||loyaltyAccount(phone,source?.name);
+ if(!account){toast("Customer loyalty record nahi mila.");return}
+ let msg=loyaltyMessage(account,source||{});
+ try{
+   let blob=await loyaltyCardBlob(account,source||{});
+   if(!blob)throw new Error("Card image create nahi hui");
+   let file=new File([blob],`Shubh-Loyalty-${account.phone}.png`,{type:"image/png"});
+
+   // Android Chrome/PWA: directly open the native Share Sheet with the image.
+   if(typeof navigator.share==="function"){
+     try{
+       await navigator.share({title:"Shubh Tour & Travels Loyalty Card",text:msg,files:[file]});
+       toast("✅ Loyalty Card shared.");
+       return;
+     }catch(e){
+       if(e && e.name==="AbortError") return;
+       console.log("Native image share unavailable",e);
+     }
+   }
+
+   // Reliable fallback: save the actual PNG first, then open WhatsApp text.
+   let u=URL.createObjectURL(blob),aTag=document.createElement("a");
+   aTag.href=u;aTag.download=`Shubh-Loyalty-${account.phone}.png`;aTag.rel="noopener";
+   document.body.appendChild(aTag);aTag.click();aTag.remove();
+   setTimeout(()=>URL.revokeObjectURL(u),10000);
+   toast("✅ Loyalty Card image save ho gayi. WhatsApp khul raha hai...");
+   setTimeout(()=>shareWhatsAppText(phone,msg+"\n\n⭐ Loyalty Card image phone me save ho gayi hai. WhatsApp me attach karke bhej dein."),700);
+ }catch(e){
+   console.error("Loyalty share failed:",e);
+   shareWhatsAppText(phone,msg);
+ }
+}
+
+function shareDriverPackage(phone){let rec=findLatestDriverPackage(phone);if(!rec){toast("Is customer ka permanent driver package record nahi mila.");return}shareWhatsAppText(rec.customerPhone,driverPackageMessage(rec));}
+function shareLatestLoyaltyCard(){if(!lastBill){toast("Completed bill nahi mila.");return}let a=rebuildLoyaltyForCustomer(lastBill.phone,lastBill.name)||loyaltyAccount(lastBill.phone,lastBill.name);if(!a){toast("Customer record nahi mila.");return}shareLoyaltyCard(lastBill.phone,{...lastBill,bookingId:lastBill.bookingId||lastBill.id,completedAt:lastBill.end||Date.now()});}
+function shareLatestDriverPackage(){if(!lastBill){toast("Completed bill nahi mila.");return}shareDriverPackage(lastBill.phone);}
+function lookupCustomerLoyalty(){
+ let p=$("loyaltyLookup").value.replace(/\D/g,"");if(!p){toast("Customer WhatsApp number dalo.");return}
+ let a=rebuildLoyaltyForCustomer(p)||loyaltyAccount(p),rec=findLatestDriverPackage(p);
+ $("loyaltyLookupResult").innerHTML=a
+ ?`<b>${escapeHtml(a.name||"Customer")}</b><br>⭐ ${Number(a.stamps||0)}/5 stamps • ${Number(a.totalCompleted||0)} completed bookings<br>${a.rewardUnlocked?"🎁 ₹100 reward unlocked":"No reward unlocked yet"}${rec?`<br>👨‍✈️ ${escapeHtml(rec.driverName)} • ${escapeHtml(rec.packageName)} • ${money(rec.packageCharge)}<br>📅 ${formatDateOnly(rec.joiningDate)} → ${formatDateOnly(rec.serviceEndDate)}<br><button class="btn outline mini" onclick="shareDriverPackage('${String(rec.customerPhone).replace(/[^0-9]/g,"")}')">📤 SHARE DRIVER DETAILS</button>`:"<br>No permanent driver package."}<br><button class="btn gold mini" id="lookupLoyaltyShareBtn">⭐ SHARE LOYALTY CARD</button>`
+ :"Customer not found.";
+ const shareBtn=$("lookupLoyaltyShareBtn");
+ if(shareBtn){shareBtn.onclick=()=>shareLoyaltyCard(p,{name:a.name||"Customer"});}
+}
+function makeReferralCode(){
+ let chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",list=load("shubhReferralAccounts","[]");
+ for(let attempt=0;attempt<100;attempt++){
+  let code="ST";for(let i=0;i<7;i++)code+=chars[Math.floor(Math.random()*chars.length)];
+  let exists=list.some(x=>String(x.code||"").toUpperCase()===code||(Array.isArray(x.legacyCodes)&&x.legacyCodes.map(v=>String(v).toUpperCase()).includes(code)));
+  if(!exists)return code;
+ }
+ return "ST"+Date.now().toString(36).toUpperCase().replace(/[^A-Z0-9]/g,"").slice(-7);
+}
+function referralAccount(phone,name){
+ let p=String(phone||"").replace(/\D/g,"");if(!p)return null;
+ let list=load("shubhReferralAccounts","[]"),i=list.findIndex(x=>String(x.phone||x.ownerPhone||"").replace(/\D/g,"")===p);
+ let a=i>=0?list[i]:{id:"RF-"+Date.now().toString(36).toUpperCase(),phone:p,name:name||"Customer",code:makeReferralCode(),legacyCodes:[],bonus:0,earned:0,successfulReferrals:0,pendingReferrals:0,updatedAt:Date.now(),createdAt:Date.now()};
+ if(i>=0){
+  a.phone=p;a.name=name||a.name||a.ownerName||"Customer";
+  if(!a.code)a.code=makeReferralCode();
+  if(!Array.isArray(a.legacyCodes))a.legacyCodes=[];
+  if(a.ownerPhone&&!a.phone)a.phone=a.ownerPhone;
+  if(a.ownerName&&!a.name)a.name=a.ownerName;
+  if(a.earned==null)a.earned=Number(a.bonus||0);
+ }
+ let oldCode="ST"+p.slice(-6);
+ if(a.code===oldCode){if(!Array.isArray(a.legacyCodes))a.legacyCodes=[];if(!a.legacyCodes.includes(oldCode))a.legacyCodes.push(oldCode);a.code=makeReferralCode();}
+ if(!Array.isArray(a.legacyCodes))a.legacyCodes=[];
+ a.ownerPhone=a.phone;a.ownerName=a.name;a.bonus=Number(a.bonus!=null?a.bonus:a.earned||0);a.earned=Number(a.earned!=null?a.earned:a.bonus||0);
+ if(i<0)list.unshift(a);else list[i]=a;
+ save("shubhReferralAccounts",list.slice(0,10000));return a;
+}
+function findReferralByCode(code){
+ let c=String(code||"").trim().toUpperCase();if(!c)return null;
+ return load("shubhReferralAccounts","[]").find(x=>String(x.code||"").toUpperCase()===c||(Array.isArray(x.legacyCodes)&&x.legacyCodes.map(v=>String(v).toUpperCase()).includes(c)))||null;
+}
+function referralLink(a){
+ let text=`Namaste, mujhe Shubh Tour & Travels & Driver Services se service leni hai. Referral Code: ${a.code}`;
+ return `https://wa.me/916265584095?text=${encodeURIComponent(text)}`;
+}
+function shareReferral(phone){
+ let a=referralAccount(phone);if(!a)return;
+ location.href="https://wa.me/?text="+encodeURIComponent(referralMessage(a));
+}
+function referralMessage(a){
+ return `*SHUBH TOUR & TRAVELS & DRIVER SERVICES*\n\n🎁 *Refer & Earn ₹100*\n\nAapka referral code: *${a.code}*\n\nApne friend/family ko ye WhatsApp link bhejiye:\n${referralLink(a)}\n\nLink kholne par hamare WhatsApp par aapka referral code message me aa jayega. Naya customer first completed booking karega to aapko *₹100 bonus* milega.\n\n📞 6265584095 / 9893772425`;
+}
+function lookupReferral(){
+ let p=($('referralLookup')?.value||'').replace(/\D/g,'');
+ if(!p){toast('Customer WhatsApp number dalo.');return}
+ let c=load('shubhCustomers','[]').find(x=>String(x.phone||'').replace(/\D/g,'')===p),a=referralAccount(p,c?.name);
+ let tx=load('shubhReferralTransactions','[]').filter(x=>String(x.referrerPhone||x.ownerPhone||'').replace(/\D/g,'')===p);
+ $('referralResult').innerHTML=`<b>${escapeHtml(a.name||'Customer')}</b><br>📞 Referrer Mobile: <b>${escapeHtml(a.phone)}</b><br>🔑 Referral Code: <b>${escapeHtml(a.code)}</b><br>🎁 Bonus Earned: <b>${money(a.bonus||a.earned||0)}</b> • Successful Referrals: ${Number(a.successfulReferrals||0)}<br><small>WhatsApp Link: ${escapeHtml(referralLink(a))}</small><br>${tx.length?'<hr>'+tx.map(x=>`👤 Referred Customer: <b>${escapeHtml(x.referredName||'Customer')}</b> • 📞 ${escapeHtml(x.referredPhone||'—')}<br>🗓️ ${new Date(x.createdAt||Date.now()).toLocaleDateString('en-IN')} • Bonus ${money(x.bonus||100)}`).join('<br>'):'<br>No successful referral record yet.'}<br><button class="btn gold mini" onclick="shareReferral('${escapeHtml(a.phone)}')">📲 SHARE REFERRAL ON WHATSAPP</button>`;
+}
+function lookupReferralByCode(){
+ let code=($('referralCodeAdmin')?.value||'').trim().toUpperCase();
+ if(!code){toast('Referral code dalo.');return}
+ let a=findReferralByCode(code);
+ if(!a){$('referralAdminResult').innerHTML='<span style="color:#b42318;font-weight:800">Referral code nahi mila.</span>';return}
+ let p=String(a.phone||a.ownerPhone||'').replace(/\D/g,''),tx=load('shubhReferralTransactions','[]').filter(x=>String(x.referrerPhone||x.ownerPhone||'').replace(/\D/g,'')===p);
+ $('referralAdminResult').innerHTML=`<b>REFERRER FOUND</b><br>👤 Name: <b>${escapeHtml(a.name||a.ownerName||'Customer')}</b><br>📞 Mobile: <b>${escapeHtml(a.phone||a.ownerPhone||'')}</b><br>🔑 Code: <b>${escapeHtml(a.code)}</b><br>🎁 Bonus: <b>${money(a.bonus||a.earned||0)}</b> • Successful: ${Number(a.successfulReferrals||0)}<hr>${tx.length?tx.map(x=>`👤 Referred Customer: <b>${escapeHtml(x.referredName||'Customer')}</b><br>📞 Referred Mobile: <b>${escapeHtml(x.referredPhone||'—')}</b><br>🗓️ Completed: ${new Date(x.createdAt||Date.now()).toLocaleString('en-IN')}<br>💰 Bonus: ${money(x.bonus||100)}<br>`).join('<hr>'):'Is code se abhi koi successful referral nahi mila.'}`;
+}
+function processReferralForCompletedRide(source){
+ let code=String(source?.referralCode||source?.refCode||'').trim().toUpperCase();
+ if(!code&&source?.bookingId){let rb=load('shubhBookings','[]').find(b=>b.id===source.bookingId);code=String(rb?.referralCode||'').trim().toUpperCase();}
+ if(!code)return null;
+ let ref=findReferralByCode(code);if(!ref)return null;
+ let refPhone=String(ref.phone||ref.ownerPhone||'').replace(/\D/g,''),p=String(source.phone||'').replace(/\D/g,'');
+ if(!p||p===refPhone)return null;
+ let tx=load('shubhReferralTransactions','[]');
+ // One ₹100 reward per referred customer, on that customer's FIRST completed booking only.
+ if(tx.some(x=>String(x.referredPhone||'').replace(/\D/g,'')===p))return ref;
+ let key=String(source.bookingId||source.id||source.billNo||Date.now())+'|'+ref.code;
+ if(tx.some(x=>x.key===key))return ref;
+ ref.bonus=Number(ref.bonus||ref.earned||0)+100;ref.earned=ref.bonus;ref.successfulReferrals=Number(ref.successfulReferrals||0)+1;ref.updatedAt=Date.now();ref.phone=ref.phone||ref.ownerPhone;ref.name=ref.name||ref.ownerName;
+ let list=load('shubhReferralAccounts','[]'),i=list.findIndex(x=>x.id===ref.id);if(i>=0)list[i]=ref;else list.unshift(ref);save('shubhReferralAccounts',list.slice(0,10000));
+ tx.unshift({id:'RT-'+Date.now().toString(36).toUpperCase(),key,referredPhone:p,referredName:source.name||'Customer',referrerPhone:ref.phone,referrerName:ref.name||'Customer',referralCode:ref.code,bonus:100,bookingId:source.bookingId||source.id,billNo:source.billNo||null,createdAt:Date.now()});save('shubhReferralTransactions',tx.slice(0,30000));return ref;
+}
+function bookingDataFromForm(){
+ let name=$("customerName").value.trim(),phone=$("customerPhone").value.replace(/\D/g,""),sd=new Date($("startAt").value);
+ let urlRef=new URLSearchParams(location.search).get("ref")||localStorage.getItem("shubhPendingReferral")||"";
+ let manualRef=$("bookingReferralCode")?.value.trim().toUpperCase()||"",refCode=manualRef||urlRef.trim().toUpperCase();
+ if(!name||!phone||Number.isNaN(sd.getTime())){toast("Customer, WhatsApp aur journey date/time bharna zaroori hai.");return null}
+ if(refCode&&!findReferralByCode(refCode)){toast("Referral code nahi mila. Code check karo.");return null}
+ let assignedDriver=null;
+ if($("newBookingDriverBox")&&!$("newBookingDriverBox").classList.contains("hidden")) assignedDriver=saveOrGetBookingDriver();
+ else {let di=service==="driver"?$("assignedDriver").value:$("carAssignedDriver").value;if(di!=="")assignedDriver=load("shubhDrivers","[]")[Number(di)]||null;}
+ if(!assignedDriver)assignedDriver={name:"Driver Pending",phone:"",license:""};
+ let vendor=null;if(service==="car"&&$("assignedVendor").value!=="")vendor=load("shubhVendors","[]")[Number($("assignedVendor").value)]||null;
+ let packageKey=service==="driver"?($("driverPackage")?.value||""):"",packageInfo=getDriverPackageInfo(packageKey,sd);
+ return {id:"BK-"+Date.now().toString(36).toUpperCase(),createdAt:Date.now(),name,phone,start:sd.toISOString(),service,driverName:assignedDriver.name,driverPhone:assignedDriver.phone,driverLicense:assignedDriver.license||"",vehicle:service==="car"?(CAR[$("car").value]?.name||$("car").value):"",vehicleNo:service==="car"?$("bookingVehicleNo").value.trim():"",startKm:Number($("startKm")?.value||0),vendorName:vendor?.name||"",vendorPhone:vendor?.phone||"",plan:service==="driver"?$("driverPlan").value:"",carType:service==="car"?$("carType").value:"",referralCode:refCode,packageKey,packageName:packageInfo.name,packageCharge:packageInfo.charge,joiningDate:packageInfo.joiningDate,serviceEndDate:packageInfo.serviceEndDate};
+}
+
+function renderBookingReceipt(){
+ let b=lastBooking;
+ if(!b){toast("Booking data nahi mili.");return false}
+ const set=(id,val)=>{let e=$(id);if(e)e.textContent=val??"—"};
+ set("rBookingNo",b.id);
+ set("rBookingDate","Confirmed on "+new Date(b.createdAt).toLocaleString("en-IN"));
+ set("rServiceTitle","BOOKING CONFIRMED");
+ set("rCustomer",b.name);
+ set("rService",b.service==="car"?"Car Rental — "+(b.vehicle||"Vehicle") : "Driver Service — "+(DRIVER[b.plan]?.label||b.plan||"Service"));
+ set("rStart",new Date(b.start).toLocaleString("en-IN"));
+ set("rDriver",b.driverName||"Driver to be assigned");
+ set("rDriverPhone",b.driverPhone||"Will be shared before journey");
+ set("rVehicle",b.vehicle||"—");
+ set("rVehicleNo",b.vehicleNo||"Will be shared before journey");
+ set("rId",b.id);
+ set("rBookingStatus",b.driverSentAt?"DRIVER DUTY SENT":(b.confirmationSentAt?"CUSTOMER CONFIRMATION SENT":"BOOKING CONFIRMED"));
+ let vr=$("rVehicleRow"),vn=$("rVehicleNoRow"),dr=$("rDriverPhoneRow");
+ if(vr)vr.classList.toggle("hidden",b.service!=="car");
+ if(vn)vn.classList.toggle("hidden",b.service!=="car");
+ if(dr)dr.classList.toggle("hidden",!b.driverPhone);
+ return true;
+}
+
+function refreshBookingUI(){
+ try{renderBookingManager()}catch(e){console.error("Booking manager refresh failed",e)}
+ try{renderHome()}catch(e){console.error("Home refresh failed",e)}
+}
+function confirmBooking(){
+ try{
+   const b=bookingDataFromForm();
+   if(!b)return;
+   if(!/^\d{10,15}$/.test(b.phone)){toast("WhatsApp number 10–15 digits ka hona chahiye.");return}
+   // Save customer immediately so a confirmed booking always creates/updates the customer profile.
+   let customers=load("shubhCustomers","[]");
+   const ci=customers.findIndex(c=>c.phone===b.phone);
+   const customer={name:b.name,phone:b.phone,lastUsed:Date.now()};
+   if(ci>=0)customers[ci]={...customers[ci],...customer};else customers.unshift(customer);
+   save("shubhCustomers",customers.slice(0,500));
+   referralAccount(b.phone,b.name);
+
+   b.status="confirmed";
+   b.confirmationSentAt=null;
+   b.driverSentAt=null;
+   b.completedAt=null;
+   b.cancelledAt=null;
+   b.reminderSent_24h=null;
+   b.reminderSent_2h=null;
+   b.reminderSent_30m=null;
+   let list=load("shubhBookings","[]");
+   // Prevent an accidental double-tap from creating duplicate bookings within 15 seconds.
+   const duplicate=list.find(x=>x.name===b.name && x.phone===b.phone && x.service===b.service && Math.abs(new Date(x.start)-new Date(b.start))<15000);
+   if(duplicate){
+     lastBooking=duplicate;
+     go("bookingReceipt");
+     renderBookingReceipt();
+     saveDriverPackageRecord(b);
+ refreshBookingUI();
+     toast("⚠️ Same booking already confirmed: "+duplicate.id);
+     return;
+   }
+   list.unshift(b);
+   save("shubhBookings",list.slice(0,1000));
+   if(b.referralCode)localStorage.removeItem("shubhPendingReferral");
+   lastBooking=b;
+   saveDriverPackageRecord(b);
+
+   // Navigate first, then paint the receipt. This prevents a secondary dashboard/render error from making a successful save look like a failed booking.
+   go("bookingReceipt");
+   try{renderBookingReceipt()}catch(e){console.error("Booking receipt render failed",e)}
+   refreshBookingUI();
+   toast("✅ Booking confirmed: "+b.id);
+ }catch(e){
+   console.error("CONFIRM BOOKING failed",e);
+   toast("❌ Booking save nahi ho payi. Please fields check karke dobara try karo.");
+ }
+}
+
+function updateBookingRecord(id,patch){
+ try{
+   let list=load("shubhBookings","[]"),i=list.findIndex(x=>x.id===id);
+   if(i<0){toast("Booking nahi mili.");return null}
+   list[i]={...list[i],...patch};
+   save("shubhBookings",list);
+   if(lastBooking?.id===id)lastBooking=list[i];
+   refreshBookingUI();
+   return list[i];
+ }catch(e){console.error("Booking update failed",e);toast("Booking status update nahi hua.");return null}
+}
+
+function markBookingConfirmationSent(){if(!lastBooking)return;updateBookingRecord(lastBooking.id,{confirmationSentAt:Date.now(),status:"confirmed"});try{renderBookingReceipt()}catch(e){}toast("Customer confirmation marked as sent.")}
+function markDriverSent(){if(!lastBooking)return;updateBookingRecord(lastBooking.id,{driverSentAt:Date.now(),status:"driver_sent"});try{renderBookingReceipt()}catch(e){}toast("Driver duty marked as sent.")}
+function bookingReminderLevel(b){
+ if(!b||b.cancelledAt||b.completedAt)return {label:"Completed/Closed",cls:"done",mins:null};
+ let mins=Math.round((new Date(b.start)-Date.now())/60000);
+ if(mins<0)return {label:"START TIME PASSED",cls:"due",mins};
+ if(mins<=30)return {label:"DUE WITHIN 30 MIN",cls:"due",mins};
+ if(mins<=120)return {label:"DUE WITHIN 2 HOURS",cls:"due",mins};
+ if(mins<=1440)return {label:"DUE TODAY / TOMORROW",cls:"",mins};
+ return {label:"UPCOMING",cls:"",mins};
+}
+function bookingWhen(b){
+ let d=new Date(b.start),today=new Date();today.setHours(0,0,0,0);let day=new Date(d);day.setHours(0,0,0,0);
+ let diff=Math.round((day-today)/86400000),time=d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+ if(diff===0)return "Today • "+time;
+ if(diff===1)return "Tomorrow • "+time;
+ if(diff===-1)return "Yesterday • "+time;
+ return d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})+" • "+time;
+}
+function bookingStatusText(b){
+ let parts=[];
+ if(b.confirmationSentAt)parts.push("Customer confirmation sent");
+ else parts.push("Confirmation pending");
+ if(b.driverSentAt)parts.push("Driver duty sent");
+ else parts.push("Driver duty pending");
+ return parts.join(" • ");
+}
+function bookingReminderCard(b){
+ let r=bookingReminderLevel(b),urgent=r.cls==="due";
+ let serviceLabel=b.service==="car"?"🚗 "+b.vehicle+(b.vehicleNo?" • "+b.vehicleNo:""):"👨‍✈️ Driver Service — "+(DRIVER[b.plan]?.label||"");
+ let driver=b.driverName?b.driverName+" • "+b.driverPhone:"Driver not assigned";
+ return `<div class="bookingReminder ${urgent?"urgent":""}">
+  <div class="reminderHead"><div><b>${escapeHtml(b.name)}</b><small>${escapeHtml(serviceLabel)}</small><small>🗓️ ${bookingWhen(b)} • ${escapeHtml(b.id)}</small></div><span class="reminderBadge ${r.cls}">${r.label}</span></div>
+  <small>👨‍✈️ ${escapeHtml(driver)}</small>
+  <small>📌 ${escapeHtml(bookingStatusText(b))}</small>
+  <div class="reminderActions">
+   ${b.driverPhone?"":"<button class='btn gold mini' data-booking='"+b.id+"' onclick='assignBookingDriver(this.dataset.booking)'>👨‍✈️ ASSIGN DRIVER</button>"}
+   <button class="btn green mini" onclick="sendBookingToDriver('${b.id}')">💬 SEND DRIVER</button>
+   <button class="btn outline mini" onclick="sendBookingReminderToCustomer('${b.id}')">📲 CUSTOMER REMINDER</button>
+   ${b.confirmationSentAt?"<button class='btn outline mini' onclick='unmarkConfirmation(\""+b.id+"\")'>↩ Confirmation</button>":"<button class='btn gold mini' onclick='markBookingById(\""+b.id+"\",\"confirmationSentAt\")'>✅ CONFIRM SENT</button>"}
+   ${b.driverSentAt?"<button class='btn outline mini' onclick='unmarkDriver(\""+b.id+"\")'>↩ Driver Sent</button>":"<button class='btn gold mini' onclick='markBookingById(\""+b.id+"\",\"driverSentAt\")'>👨‍✈️ DRIVER SENT</button>"}
+   <button class="btn dark mini" data-booking="${b.id}" onclick="openBillingFromBookingManager(this.dataset.booking)">🧾 BILL</button>
+  </div>
+ </div>`;
+}
+function renderBookingManager(){
+ let list=load("shubhBookings","[]").filter(b=>!b.completedAt&&!b.cancelledAt).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
+ let upcoming=list.filter(b=>new Date(b.start)>=new Date(Date.now()-86400000)).sort((a,b)=>new Date(a.start)-new Date(b.start));
+ $("bookingManagerCount").textContent=list.length;
+ $("reminderCount").textContent=upcoming.length;
+ $("bookingManagerList").innerHTML=list.length?list.map(bookingReminderCard).join(""):'<div class="empty"><b>No pending bookings</b>New bookings yahan automatically appear hongi.</div>';
+ $("homeUpcomingBookings").innerHTML=upcoming.slice(0,3).map(bookingReminderCard).join("")||'<div class="empty">No upcoming bookings.</div>';
+ let p=$("reminderPermission");if(p){p.textContent=("Notification" in window)?(Notification.permission==="granted"?"🔔 Reminders enabled.":"🔕 App reminders available — Enable Reminders dabao."):"Browser notifications unavailable; in-app reminders still work."}
+}
+function markBookingById(id,field){let patch={};patch[field]=Date.now();updateBookingRecord(id,patch);toast(field==="confirmationSentAt"?"Customer confirmation marked sent.":"Driver duty marked sent.")}
+function assignBookingDriver(id){
+ let list=load("shubhBookings","[]"),i=list.findIndex(x=>x.id===id),b=i>=0?list[i]:null;
+ if(!b){toast("Booking nahi mili.");return}
+ let drivers=load("shubhDrivers","[]");
+ if(!drivers.length){toast("Pehle Driver List me driver add karo.");return}
+ let options=drivers.map((d,n)=>`${n+1}. ${d.name} • ${d.phone}`).join("\n");
+ let ans=prompt("Driver select karo:\n\n"+options+"\n\nNumber enter karo:");
+ if(ans===null)return;
+ let n=parseInt(ans,10)-1,d=drivers[n];
+ if(!d){toast("Invalid driver selection.");return}
+ let updated=updateBookingRecord(id,{driverName:d.name,driverPhone:d.phone,driverLicense:d.license||"",driverSentAt:null,status:"confirmed"});
+ if(updated)saveDriverPackageRecord(updated);
+ lastBooking=load("shubhBookings","[]").find(x=>x.id===id)||lastBooking;
+ toast("✅ Driver assigned: "+d.name);
+}
+
+function unmarkConfirmation(id){updateBookingRecord(id,{confirmationSentAt:null});toast("Confirmation status reset.")}
+function unmarkDriver(id){updateBookingRecord(id,{driverSentAt:null});toast("Driver sent status reset.")}
+function sendBookingToDriver(id){
+ let b=load("shubhBookings","[]").find(x=>x.id===id);if(!b||!b.driverPhone){toast("Driver number missing.");return}
+ updateBookingRecord(id,{driverSentAt:Date.now(),status:"driver_sent"});
+ let msg=`*SHUBH TOUR & TRAVELS — DUTY ASSIGNMENT*\n\n👨‍✈️ *Driver:* ${b.driverName}\n👤 *Customer:* ${b.name}\n📞 *Customer:* ${b.phone}\n🗓️ *Duty:* ${new Date(b.start).toLocaleString("en-IN")}\n🚘 *Service:* ${b.service==="car"?"Car Rental — "+b.vehicle:"Driver Service — "+(DRIVER[b.plan]?.label||"")}\n${b.service==="car"?`🔢 *Vehicle No:* ${b.vehicleNo||"To be shared"}\n`:""}🧾 *Booking ID:* ${b.id}\n\nPlease confirm duty.\n*Ride with Trust • Travel with Shubh*`;
+ location.href="https://wa.me/"+normalizeWhatsAppNumber(b.driverPhone)+"?text="+encodeURIComponent(msg);
+}
+function sendBookingReminderToCustomer(id){
+ let b=load("shubhBookings","[]").find(x=>x.id===id);if(!b)return;
+ let msg=`*SHUBH TOUR & TRAVELS — DUTY REMINDER*\n\nHello ${b.name},\n\nReminder: your booking is scheduled for *${bookingWhen(b)}*.\n\n🚘 *Service:* ${b.service==="car"?"Car Rental — "+b.vehicle:"Driver Service"}\n👨‍✈️ *Driver:* ${b.driverName}\n📞 *Driver:* ${b.driverPhone}\n🧾 *Booking ID:* ${b.id}\n\nPlease be ready at the scheduled pickup time.\n\n*Ride with Trust • Travel with Shubh*\n📞 6265584095 / 9893772425`;
+ location.href="https://wa.me/"+normalizeWhatsAppNumber(b.phone)+"?text="+encodeURIComponent(msg);
+}
+function enableBookingReminders(){
+ if(!("Notification" in window)){toast("Is browser me notifications supported nahi hain.");return}
+ Notification.requestPermission().then(p=>{renderBookingManager();if(p==="granted")toast("🔔 Booking reminders enabled.");else toast("Notification permission allow nahi hua.");});
+}
+function checkBookingReminders(){
+ let list=load("shubhBookings","[]").filter(b=>!b.cancelledAt&&!b.completedAt),now=Date.now();
+ list.forEach(b=>{
+   let mins=Math.round((new Date(b.start)-now)/60000);
+   let key=mins<=30?"30m":mins<=120?"2h":mins<=1440?"24h":null;
+   if(!key || mins<0)return;
+   let sentKey="reminderSent_"+key;
+   if(b[sentKey])return;
+   let updated={};updated[sentKey]=Date.now();
+   updateBookingRecord(b.id,updated);
+   const text=`${b.name} • ${bookingWhen(b)} • ${b.driverName||"Driver pending"}`;
+   if("Notification" in window&&Notification.permission==="granted"){
+     try{new Notification("Shubh Tour & Travels — Booking Reminder",{body:text})}catch(e){console.error(e)}
+   }
+   // Keep a visible in-app signal as well; this works even when browser notifications are denied.
+   if(mins<=30)toast("🔴 Duty due soon: "+b.name+" • "+bookingWhen(b));
+ });
+ try{renderBookingManager()}catch(e){}
+}
+
+function completeBooking(id){let b=load("shubhBookings","[]").find(x=>x.id===id);if(!b)return;let completedAt=b.completedAt||Date.now();let updated=updateBookingRecord(id,{completedAt,status:"completed"});if(updated){awardLoyaltyForCompletedRide({id:b.id,bookingId:b.id,phone:b.phone,name:b.name,completedAt});saveDriverPackageRecord(updated);toast("✅ Booking completed • Loyalty stamp added.");}}
+function cancelBooking(id){if(!confirm("Booking cancel karna hai?"))return;updateBookingRecord(id,{cancelledAt:Date.now(),status:"cancelled"});toast("Booking cancelled.")}
+function bookingConfirmationText(b){return `*SHUBH TOUR & TRAVELS*\n*BOOKING CONFIRMATION*\n\nHello ${b.name},\n\nYour booking is confirmed with Shubh Tour & Travels.\n\n🧾 *Booking ID:* ${b.id}\n📅 *Journey Date:* ${new Date(b.start).toLocaleDateString("en-IN")}\n⏰ *Pickup / Duty Time:* ${new Date(b.start).toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"})}\n🚘 *Service:* ${b.service==="car"?"Car Rental":"Driver Service"}\n👨‍✈️ *Driver:* ${b.driverName}\n📞 *Driver Contact:* ${b.driverPhone||"Will be shared before journey"}\n${b.service==="car"?`🚗 *Vehicle:* ${b.vehicle}\n🔢 *Vehicle Number:* ${b.vehicleNo||"Will be shared before journey"}\n`:""}\n📌 *Status:* BOOKING CONFIRMED\n\nPlease keep this message for your journey. We will provide any final ride update before departure.\n\n*Ride with Trust • Travel with Shubh*\nThank you for choosing Shubh. We look forward to serving you.\n\n📞 6265584095 / 9893772425`}
+function whatsappBookingConfirmation(){if(!lastBooking)return;updateBookingRecord(lastBooking.id,{confirmationSentAt:Date.now(),status:"confirmed"});location.href="https://wa.me/"+normalizeWhatsAppNumber(lastBooking.phone)+"?text="+encodeURIComponent(bookingConfirmationText(lastBooking));}
+function rideStartText(b){return `*SHUBH TOUR & TRAVELS*\n*RIDE START UPDATE*\n\nHello ${b.name},\n\nYour ride has now started.\n\n🧾 *Booking ID:* ${b.bookingId||b.id}\n🚘 *Service:* ${b.service==="car"?"Car Rental":"Driver Service"}\n👨‍✈️ *Driver:* ${b.assignedDriverName||b.driverName}\n📞 *Driver Contact:* ${b.assignedDriverPhone||b.driverPhone}\n${b.service==="car"?`🚗 *Vehicle:* ${CAR[b.car]?.name||b.vehicle}\n🔢 *Vehicle Number:* ${b.bookingVehicleNo||b.vehicleNo||"—"}\n`:""}🕐 *Ride Start:* ${new Date(b.start).toLocaleString("en-IN")}\n\nHave a safe and comfortable journey.\n\n*Ride with Trust • Travel with Shubh*\n📞 6265584095 / 9893772425`}
+function sendRideStartToCustomer(){if(!active){toast("Active ride nahi hai.");return}location.href="https://wa.me/"+normalizeWhatsAppNumber(active.phone)+"?text="+encodeURIComponent(rideStartText(active));}
+function sendRideStartPreviewFromReceipt(){if(!lastBooking){toast("Booking nahi mili.");return}location.href="https://wa.me/"+normalizeWhatsAppNumber(lastBooking.phone)+"?text="+encodeURIComponent(rideStartText({...lastBooking,start:new Date().toISOString(),assignedDriverName:lastBooking.driverName,assignedDriverPhone:lastBooking.driverPhone,bookingVehicleNo:lastBooking.vehicleNo}));}
+async function bookingReceiptBlob(){let b=lastBooking,W=1000,H=1550,c=document.createElement("canvas");c.width=W;c.height=H;let x=c.getContext("2d");x.fillStyle="#f6f1e3";x.fillRect(0,0,W,H);x.fillStyle="#07152b";x.fillRect(0,0,W,300);try{let img=new Image();img.src="logo.png";await new Promise((r,j)=>{img.onload=r;img.onerror=j});x.drawImage(img,50,35,230,230)}catch(e){}x.fillStyle="#f3b719";x.font="900 60px Arial";x.fillText("SHUBH",320,100);x.fillStyle="#fff";x.font="900 38px Arial";x.fillText("TOUR & TRAVELS",320,155);x.font="20px Arial";x.fillText("RATAN PALACE, KATORA TALAB, RAIPUR, CHHATTISGARH",320,205);x.fillStyle="#07152b";x.font="900 38px Arial";x.fillText("BOOKING CONFIRMATION",55,370);let rows=[["Booking ID",b.id],["Confirmed On",new Date(b.createdAt).toLocaleString("en-IN")],["Customer",b.name],["Service",b.service==="car"?"Car Rental — "+b.vehicle:"Driver Service"],["Journey Date",new Date(b.start).toLocaleDateString("en-IN")],["Pickup / Duty Time",new Date(b.start).toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"})],["Driver",b.driverName],["Driver Contact",b.driverPhone]];if(b.packageKey){rows.push(["Driver Package",b.packageName+" — "+money(b.packageCharge)], ["Service Period",new Date(b.joiningDate).toLocaleDateString("en-IN")+" to "+new Date(b.serviceEndDate).toLocaleDateString("en-IN")]);}if(b.service==="car"){rows.push(["Vehicle",b.vehicle],["Vehicle Number",b.vehicleNo||"To be shared before journey"])}let y=440;rows.forEach((r,i)=>{x.fillStyle=i%2?"#fffaf0":"#ebe3d1";x.fillRect(45,y-28,910,58);x.fillStyle="#344054";x.font="700 21px Arial";x.fillText(r[0],70,y);x.fillStyle="#111827";x.font="700 21px Arial";x.fillText(String(r[1]),365,y);y+=65});x.fillStyle="#07152b";x.fillRect(45,y+35,910,190);x.fillStyle="#f3b719";x.font="900 25px Arial";x.textAlign="center";x.fillText("BOOKING CONFIRMED",W/2,y+75);x.fillStyle="#fff";x.font="900 24px Arial";x.fillText("RIDE WITH TRUST • TRAVEL WITH SHUBH",W/2,y+115);x.font="italic 18px Arial";x.fillText("Thank you for choosing Shubh. We look forward to serving you.",W/2,y+150);x.font="17px Arial";x.fillText("6265584095 / 9893772425",W/2,y+178);x.textAlign="left";return await new Promise(r=>c.toBlob(r,"image/png",1))}
+async function shareBookingReceipt(){if(!lastBooking)return;let blob=await bookingReceiptBlob(),file=new File([blob],`Shubh-Booking-${lastBooking.id}.png`,{type:"image/png"});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})))await navigator.share({title:"Shubh Tour & Travels Booking Confirmation",files:[file]});else{let u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=`Shubh-Booking-${lastBooking.id}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);toast("Receipt image downloaded.")}}catch(e){} }
+
+function startDuty(){
+ if(active){toast("Already active.");return}
+ let name=$("customerName").value.trim(),phone=$("customerPhone").value.replace(/\D/g,""),sk=Number($("startKm").value),sd=new Date($("startAt").value);
+ if(!name||!phone||!Number.isFinite(sk)||sk<0||Number.isNaN(sd.getTime())){toast("Customer, WhatsApp, Start Time aur Start KM bharna zaroori hai.");return}
+ let customers=load("shubhCustomers","[]"),idx=customers.findIndex(c=>c.phone===phone);if(idx>=0)customers[idx]={...customers[idx],name,lastUsed:Date.now()};else customers.unshift({name,phone,lastUsed:Date.now()});save("shubhCustomers",customers.slice(0,500));
+ let assignedDriver=null,assignedVendor=null;
+ if($("newBookingDriverBox")&&!$("newBookingDriverBox").classList.contains("hidden")) assignedDriver=saveOrGetBookingDriver();
+ else {let di=service==="driver"?$("assignedDriver").value:$("carAssignedDriver").value; if(di!=="")assignedDriver=load("shubhDrivers","[]")[Number(di)]||null;}
+ if(!assignedDriver){toast("Driver select karo ya new driver add karo.");return}
+ if(service==="car" && $("assignedVendor").value!=="")assignedVendor=load("shubhVendors","[]")[Number($("assignedVendor").value)]||null;
+ let linked=load("shubhBookings","[]").find(b=>b.phone===phone&&b.name===name&&b.service===service&&Math.abs(new Date(b.start)-sd)<86400000);active={id:"ST-"+Date.now().toString(36).toUpperCase(),bookingId:linked?.id||"",service,name,phone,start:sd.toISOString(),startKm:sk,plan:service==="driver"?$("driverPlan").value:null,packageKey:service==="driver"?($("driverPackage")?.value||linked?.packageKey||""):"",packageName:service==="driver"?(getDriverPackageInfo($("driverPackage")?.value||linked?.packageKey||"",sd).name||linked?.packageName||""):"",packageCharge:service==="driver"?(getDriverPackageInfo($("driverPackage")?.value||linked?.packageKey||"",sd).charge||linked?.packageCharge||0):0,joiningDate:service==="driver"?(getDriverPackageInfo($("driverPackage")?.value||linked?.packageKey||"",sd).joiningDate||linked?.joiningDate||""):"",serviceEndDate:service==="driver"?(getDriverPackageInfo($("driverPackage")?.value||linked?.packageKey||"",sd).serviceEndDate||linked?.serviceEndDate||""):"",referralCode:($("bookingReferralCode")?.value||linked?.referralCode||localStorage.getItem("shubhPendingReferral")||"").trim().toUpperCase(),car:service==="car"?$("car").value:null,carType:service==="car"?$("carType").value:null,bookingVehicleNo:service==="car"?$("bookingVehicleNo").value.trim():"",assignedDriverPhone:assignedDriver?.phone||"",assignedDriverName:assignedDriver?.name||"",assignedDriverLicense:assignedDriver?.license||"",assignedVendorPhone:assignedVendor?.phone||"",assignedVendorName:assignedVendor?.name||""};
+ save("shubhActive",active);showDuty();toast("✅ Duty START ho gayi.")}
+function showDuty(){
+ go("duty");setDutyFields();$("rideStartCustomerBtn").classList.remove("hidden");$("dutyId").textContent=active.id;
+ $("dutyInfo").textContent=`${active.name} • Start: ${new Date(active.start).toLocaleString("en-IN")} • Start KM: ${active.startKm}${active.assignedDriverName?" • Driver: "+active.assignedDriverName:""}`;
+ $("endAt").value=nowLocal();
+ let hasDriver=!!active.assignedDriverPhone;
+ $("sendDutyToDriverBtn").classList.toggle("hidden",!hasDriver);
+ $("shareDutyDriverBtn").classList.toggle("hidden",!hasDriver);
+ startTimer()
+}
+function startTimer(){clearInterval(timerInterval);let tick=()=>{let s=Math.max(0,Math.floor((Date.now()-new Date(active.start))/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;$("timer").textContent=`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(x).padStart(2,"0")}`};tick();timerInterval=setInterval(tick,1000)}
+function confirmCancelDuty(){if(confirm("Active duty cancel karna hai?")){active=null;removeAndSync("shubhActive");clearInterval(timerInterval);go("home");toast("Active duty cancelled.")}}
+
+
+let manualService="driver";
+let __manualBillBusy=false;
+function setManualService(s){manualService=s;$("mDriverBtn").classList.toggle("active",s==="driver");$("mCarBtn").classList.toggle("active",s==="car");$("mDriverOptions").classList.toggle("hidden",s!=="driver");$("mCarOptions").classList.toggle("hidden",s!=="car");$("mCustomKmRateWrap").classList.toggle("hidden",s!=="car");$("mTollWrap").classList.toggle("hidden",s!=="car")}
+function populateManualDriverSelect(){let ds=load("shubhDrivers","[]");if($("mAssignedDriver"))$("mAssignedDriver").innerHTML='<option value="">Select saved driver</option>'+ds.map((d,i)=>`<option value="${i}">${escapeHtml(d.name)} • ${escapeHtml(d.phone)}</option>`).join("")}
+function newManualBill(){
+ if($("mReferralCode"))$("mReferralCode").value="";
+ if(active){toast("Active duty chal rahi hai. Pehle usko complete karo.");go("duty");return}
+ $("mDate").value=new Date().toISOString().slice(0,10);$("mStartTime").value="09:00";$("mEndTime").value="19:00";
+ $("mName").value="";$("mPhone").value="";$("mKm").value="";if($("mAssignedDriver"))$("mAssignedDriver").value="";populateManualDriverSelect();$("mCustomKmRate").value="";$("mCustomRent").value="";$("mToll").value="";$("mOther").value="";setManualService("driver");go("manual");
+}
+
+function ledgerKey(type){return type==="driver"?"shubhDriverLedger":"shubhVendorLedger"}
+function ledgerSummary(type,index){
+ let people=load(peopleKey(type),"[]"),p=people[index];if(!p)return {name:"Unknown",phone:"",work:0,payment:0,commission:0};
+ let entries=load(ledgerKey(type),"[]").filter(e=>e.personPhone===p.phone);
+ return {name:p.name,phone:p.phone,work:entries.reduce((s,e)=>s+Number(e.work||0),0),payment:entries.reduce((s,e)=>s+Number(e.payment||0),0),commission:entries.reduce((s,e)=>s+Number(e.commission||0),0),entries};
+}
+let accountType="driver";
+function setAccountType(type){accountType=type;$("accDriverBtn").classList.toggle("active",type==="driver");$("accVendorBtn").classList.toggle("active",type==="vendor");fillAccountSelects(type);renderAccounts();}
+function renderAccounts(){
+ let list=load(peopleKey(accountType),"[]");
+ $("accountList").innerHTML=list.length?list.map((p,i)=>{let s=ledgerSummary(accountType,i);return `<div class="personCard"><div class="personHead"><div class="personAvatar">${accountType==="driver"?"D":"V"}</div><div class="personInfo"><b>${escapeHtml(s.name)}</b><small>📱 ${escapeHtml(s.phone)}</small></div></div><div class="accountGrid"><div class="accountStat"><b>${s.work}</b><span>WORKS</span></div><div class="accountStat"><b>${money(s.payment)}</b><span>PAYMENT GIVEN</span></div><div class="accountStat"><b>${money(s.commission)}</b><span>COMMISSION</span></div><div class="accountStat"><b>${s.entries.length}</b><span>RECORDS</span></div></div><div class="personActions"><button class="btn gold mini" onclick="selectLedgerPerson(${i})">＋ RECORD</button><a class="btn callBtn mini" href="tel:${encodeURIComponent(p.phone)}">📞 Call</a><a class="btn waBtn mini" target="_blank" rel="noopener" href="https://wa.me/${normalizeWhatsAppNumber(p.phone)}">WhatsApp</a></div></div>`}).join(""):`<div class="empty"><b>No ${accountType}s added</b>Add ${accountType} first.</div>`;
+ renderLedgerHistory();
+}
+function selectLedgerPerson(i){$("ledgerPerson").value=String(i);$("ledgerPayment").focus();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});}
+function saveLedgerEntry(){
+ let i=$("ledgerPerson").value;if(i===""){toast("Person select karo.");return}
+ let people=load(peopleKey(accountType),"[]"),p=people[Number(i)];if(!p){toast("Person not found.");return}
+ let payment=Number($("ledgerPayment").value||0),commission=Number($("ledgerCommission").value||0),work=Number($("ledgerWork").value||0);
+ if(!Number.isFinite(payment)||payment<0||!Number.isFinite(commission)||commission<0){toast("Payment/commission valid dalo.");return}
+ let entry={id:"LED-"+Date.now().toString(36).toUpperCase(),personPhone:p.phone,personName:p.name,date:$("ledgerDate").value||new Date().toISOString().slice(0,10),payment,commission,work,note:$("ledgerNote").value.trim(),type:accountType,createdAt:Date.now()};
+ let key=ledgerKey(accountType),list=load(key,"[]");list.unshift(entry);save(key,list.slice(0,2000));
+ $("ledgerPayment").value="";$("ledgerCommission").value="";$("ledgerNote").value="";$("ledgerWork").value="1";
+ renderAccounts();toast("Record permanently saved.");
+}
+function renderLedgerHistory(){
+ let key=ledgerKey(accountType),list=load(key,"[]");
+ $("ledgerHistory").innerHTML=list.length?list.slice(0,80).map((e,i)=>`<div class="ledgerRow"><b>${escapeHtml(e.personName)}</b><small>${e.date} • Work: ${e.work?"Yes":"No"} • Payment: ${money(e.payment)} • Commission: ${money(e.commission)}${e.note?" • "+escapeHtml(e.note):""}</small><button class="btn danger mini" onclick="deleteLedgerEntry('${accountType}','${e.id}')">Delete</button></div>`).join(""):`<div class="empty"><b>No account records yet</b>Payments, commissions and work records will appear here.</div>`;
+}
+function deleteLedgerEntry(type,id){
+ let key=ledgerKey(type),list=load(key,"[]");if(!confirm("Ye financial record delete karna hai?"))return;list=list.filter(e=>e.id!==id);save(key,list);renderAccounts();toast("Financial record deleted.");
+}
+function autoRecordWork(bill){
+ let type=bill.service==="driver"?"driver":"vendor",phone=bill.service==="driver"?bill.assignedDriverPhone:bill.assignedVendorPhone,name=bill.service==="driver"?bill.assignedDriverName:bill.assignedVendorName;
+ if(!phone)return;
+ let key=ledgerKey(type),list=load(key,"[]");
+ if(list.some(e=>e.billNo===bill.billNo))return;
+ list.unshift({id:"LED-"+Date.now().toString(36).toUpperCase(),personPhone:phone,personName:name,date:new Date(bill.createdAt).toISOString().slice(0,10),payment:0,commission:0,work:1,note:(bill.billNo||bill.id)+" • Auto work record",type, billNo:bill.billNo,createdAt:Date.now()});
+ save(key,list.slice(0,2000));
+}
+function createManualBill(){
+ if(__manualBillBusy){toast("Bill already generate ho raha hai. Please wait.");return}
+ __manualBillBusy=true;
+ try{
+  let name=$("mName").value.trim(),phone=$("mPhone").value.replace(/\D/g,""),date=$("mDate").value,st=$("mStartTime").value,et=$("mEndTime").value,km=Number($("mKm").value);
+  let toll=Number($("mToll").value||0),other=Number($("mOther").value||0);
+  let customKmRate=$("mCustomKmRate").value===""?null:Number($("mCustomKmRate").value);
+  let customRent=$("mCustomRent").value===""?null:Number($("mCustomRent").value);
+  if(!name||!phone||!date||!st||!et||!Number.isFinite(km)||km<0){toast("Customer, date, time aur KM bharna zaroori hai.");return}
+  if(!Number.isFinite(toll)||toll<0||!Number.isFinite(other)||other<0){toast("Toll/Other amount valid dalo.");return}
+  if(customKmRate!==null&&(!Number.isFinite(customKmRate)||customKmRate<0)){toast("Custom KM rate valid dalo.");return}
+  if(customRent!==null&&(!Number.isFinite(customRent)||customRent<0)){toast("Custom rent valid dalo.");return}
+  let sd=new Date(date+"T"+st),ed=new Date(date+"T"+et);if(ed<=sd)ed.setDate(ed.getDate()+1);
+  let actual=Math.round((ed-sd)/60000),included=0,base=0,kmRate=0,label="",extraRate=0,minimumKm=0,pricingRule="",kmCharge=0;
+  if(manualService==="driver"){
+    let plan=$("mDriverPlan").value, r=DRIVER[plan];
+    included=r.min;base=customRent!==null?customRent:r.base;label="Driver Service — "+r.label;
+    if(plan==="outstation"){
+      // Outstation is a flat driver-service plan: ₹1,500 + living/fooding.
+      // It does not create a misleading "extra hours" charge.
+      included=0;extraRate=0;pricingRule="Outstation flat ₹1,500 + Living + Fooding";
+    }else{
+      extraRate=customKmRate!==null?customKmRate:100;
+      pricingRule=`Driver plan • Extra ₹${extraRate}/hour`;
+    }
+  }else{
+    let c=CAR[$("mCar").value];included=600;label=c.name+" — "+($("mCarType").value==="local"?"Local":"Outstation");
+    if(km>=300){kmRate=customKmRate!==null?customKmRate:12;minimumKm=0;kmCharge=km*kmRate;base=0;pricingRule=`300+ KM • ₹${kmRate}/km • No rent`;}
+    else{kmRate=customKmRate!==null?customKmRate:($("mCarType").value==="local"?c.local:c.out);minimumKm=80;kmCharge=Math.max(km,80)*kmRate;base=customRent!==null?customRent:c.rent;pricingRule=`Under 300 KM • Minimum 80 KM • ₹${kmRate}/km + rent`;}
+  }
+  let extraMin=manualService==="driver" && $("mDriverPlan").value==="outstation" ? 0 : Math.max(0,actual-included);
+  let extraCharge=extraMin*extraRate/60,total=base+extraCharge+kmCharge+toll+other;
+  let md=null;if(manualService==="driver"&&$("mAssignedDriver")&&$("mAssignedDriver").value!=="")md=load("shubhDrivers","[]")[Number($("mAssignedDriver").value)]||null;
+  let bill={id:"ST-M-"+Date.now().toString(36).toUpperCase(),billNo:nextBillNo(),service:manualService,name,phone,start:sd.toISOString(),end:ed.toISOString(),startKm:0,endKm:km,actual,km,included,extraMin,extraCharge,kmRate,kmCharge,minimumKm,base,total,label,extraRate,toll,other,pricingRule,customRateApplied:(customKmRate!==null||customRent!==null),customKmRate,customRent,assignedDriverPhone:md?.phone||"",assignedDriverName:md?.name||"",assignedDriverVehicle:md?.vehicle||"",assignedDriverVehicleNo:md?.vehicleNo||"",referralCode:($("mReferralCode")?.value||"").trim().toUpperCase(),createdAt:Date.now(),manual:true};
+  let customers=load("shubhCustomers","[]"),idx=customers.findIndex(c=>c.phone===phone);if(idx>=0)customers[idx]={...customers[idx],name,lastUsed:Date.now()};else customers.unshift({name,phone,lastUsed:Date.now()});save("shubhCustomers",customers.slice(0,500));
+  let bills=load("shubhBills","[]");bills.unshift(bill);save("shubhBills",bills.slice(0,50000));autoRecordWork(bill);let loyalty=awardLoyaltyForCompletedRide({id:bill.id,bookingId:bill.id,phone:bill.phone,name:bill.name,completedAt:Date.now(),billNo:bill.billNo,referralCode:bill.referralCode||""});let referralReward=processReferralForCompletedRide({id:bill.id,bookingId:bill.id,phone:bill.phone,name:bill.name,billNo:bill.billNo,referralCode:bill.referralCode||""});lastBill=bill;try{renderBill()}catch(e){console.error("Manual bill render failed",e)}toast("✅ Manual bill generated • Loyalty stamp "+Number(loyalty?.stamps||0)+"/5."+(referralReward?" • Referral ₹100 added.":""));
+ }catch(e){console.error(e);toast("Manual bill generate nahi ho paya. Saare fields check karo.");}
+ finally{__manualBillBusy=false}
+}
+function bookingMonthKey(b){let d=new Date(b?.start||b?.createdAt||b?.end);if(Number.isNaN(d.getTime()))return null;return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
+function bookingDateKey(b){let d=new Date(b?.start||b?.createdAt||b?.end);return localDateKey(d)}
+function calculateBillFromBooking(b,endAt,endKm,customKmRate,customRent,toll,other){
+ let sd=new Date(b.start),ed=new Date(endAt); if(Number.isNaN(sd.getTime())||Number.isNaN(ed.getTime())||ed<=sd)return null;
+ let km=Math.max(0,Number(endKm)-Number(b.startKm||0));
+ let actual=Math.round((ed-sd)/60000),included=0,base=0,kmRate=0,kmCharge=0,minimumKm=0,extraRate=0,extraMin=0,pricingRule="",label="";
+ const days=dutyCalendarDays(sd,ed),dates=dutyDateList(sd,ed);
+ if(b.service==="driver"){
+   let r=DRIVER[b.plan]||DRIVER["1to4"]; included=r.min;base=customRent!==null?customRent:r.base;label="Driver Service — "+r.label;
+   if(b.plan==="outstation"){included=0;extraRate=0;extraMin=0;base=(customRent!==null?customRent:1500)*days;pricingRule=`Outstation ₹1,500/day × ${days} days + Living + Fooding`;}
+   else{base=customRent!==null?customRent:r.base;extraRate=customKmRate!==null?customKmRate:100;extraMin=Math.max(0,actual-included);pricingRule=`Driver plan • Extra ₹${extraRate}/hour`;}
+ }else{
+   let c=CAR[b.car||"Dzire"]||CAR.Dzire;label=c.name+" — "+(b.carType==="local"?"Local":"Outstation");
+   if(km>=300){kmRate=customKmRate!==null?customKmRate:12;kmCharge=km*kmRate;base=0;pricingRule=`300+ KM • ₹${kmRate}/km • No rent`;}
+   else{kmRate=customKmRate!==null?customKmRate:(b.carType==="local"?c.local:c.out);minimumKm=80;kmCharge=Math.max(km,80)*kmRate;base=customRent!==null?customRent:c.rent;pricingRule=`Under 300 KM • Minimum 80 KM • ₹${kmRate}/km + rent`;}
+   extraRate=150;extraMin=Math.max(0,actual-included);included=600;
+ }
+ let extraCharge=extraMin*extraRate/60,total=base+extraCharge+kmCharge+toll+other;
+ return {...b,billNo:nextBillNo(),end:ed.toISOString(),endKm:Number(endKm),actual,km,included,extraMin,extraCharge,kmRate,kmCharge,minimumKm,base,total,label,extraRate,toll,other,pricingRule,dutyDays:days,dutyDates:dates,serviceDate:sd.toISOString().slice(0,10),createdAt:Date.now(),fromBooking:true,bookingId:b.id};
+}
+function openBillFromBooking(){
+ let b=lastBooking;if(!b){toast("Booking data nahi mili.");return}
+ if(b.completedAt){let bills=load("shubhBills","[]"),existing=bills.find(x=>x.bookingId===b.id||x.id===b.billId||x.billNo===b.billNo);if(existing){lastBill=existing;renderBill();return;}}
+ let end=$("bookingBillEndAt"),ek=$("bookingBillEndKm"),rate=$("bookingBillKmRate"),rent=$("bookingBillRent"),toll=$("bookingBillToll"),other=$("bookingBillOther");
+ if(end){end.value=nowLocal();}
+ if(ek)ek.value=Number(b.startKm||0);
+ if(rate)rate.value="";if(rent)rent.value="";if(toll)toll.value="0";if(other)other.value="0";
+ let panel=$("bookingBillPanel");if(panel)panel.scrollIntoView({behavior:"smooth",block:"center"});
+ toast("Final end time aur End KM bhar ke GENERATE FINAL BILL dabao.");
+}
+function generateBillFromBooking(){
+ let b=lastBooking;if(!b){toast("Booking data nahi mili.");return}
+ let endAt=$("bookingBillEndAt")?.value, endKm=Number($("bookingBillEndKm")?.value),toll=Number($("bookingBillToll")?.value||0),other=Number($("bookingBillOther")?.value||0);
+ let rate=$("bookingBillKmRate")?.value===""?null:Number($("bookingBillKmRate")?.value),rent=$("bookingBillRent")?.value===""?null:Number($("bookingBillRent")?.value);
+ if(!endAt||!Number.isFinite(endKm)||endKm<Number(b.startKm||0)||!Number.isFinite(toll)||toll<0||!Number.isFinite(other)||other<0){toast("End time, End KM aur charges valid dalo.");return}
+ if(rate!==null&&(!Number.isFinite(rate)||rate<0)){toast("Custom KM rate valid dalo.");return}if(rent!==null&&(!Number.isFinite(rent)||rent<0)){toast("Custom rent valid dalo.");return}
+ let bill=calculateBillFromBooking(b,endAt,endKm,rate,rent,toll,other);if(!bill){toast("End time start ke baad hona chahiye.");return}
+ let bills=load("shubhBills","[]"),existing=bills.find(x=>x.bookingId===b.id||x.id===b.id);
+ if(existing){lastBill=existing;renderBill();toast("Is booking ka bill pehle se bana hua hai.");return}
+ bills.unshift(bill);save("shubhBills",bills.slice(0,50000));autoRecordWork(bill);
+ let loyalty=awardLoyaltyForCompletedRide({id:bill.id,bookingId:b.id,phone:b.phone,name:b.name,completedAt:Date.now(),billNo:bill.billNo,referralCode:b.referralCode||""});
+ let referralReward=processReferralForCompletedRide({id:bill.id,bookingId:b.id,phone:b.phone,name:b.name,billNo:bill.billNo,referralCode:b.referralCode||""});
+ let linked=updateBookingRecord(b.id,{completedAt:Date.now(),status:"completed",end:bill.end,endKm:bill.endKm,billNo:bill.billNo,billId:bill.id});
+ if(linked)saveDriverPackageRecord(linked);
+ lastBill=bill;renderBill();toast("✅ Final bill generated • Loyalty stamp "+Number(loyalty?.stamps||0)+"/5."+(referralReward?" • Referral ₹100 added.":""));
+}
+function populateHistoryFilters(){
+ let hm=$("historyMonth");if(!hm)return;
+ let all=load("shubhBills","[]"),bookings=load("shubhBookings","[]"),months=new Set([localDateKey().slice(0,7)]);
+ all.forEach(b=>{let m=bookingMonthKey(b);if(m)months.add(m)});bookings.forEach(b=>{let m=bookingMonthKey(b);if(m)months.add(m)});
+ let arr=[...months].sort().reverse(),cur=hm.value;hm.innerHTML=arr.map(m=>{let d=new Date(m+"-01");return `<option value="${m}">${d.toLocaleString("en-IN",{month:"long",year:"numeric"})}</option>`}).join("");hm.value=arr.includes(cur)?cur:arr[0];
+}
+function clearHistoryDateFilter(){if($("historyDate"))$("historyDate").value="";renderHistory()}
+function setHistoryToday(){if($("historyDate"))$("historyDate").value=new Date().toISOString().slice(0,10);if($("historyMonth"))$("historyMonth").value=localDateKey().slice(0,7);renderHistory()}
+function deleteSingleBill(i){
+ let bills=load("shubhBills","[]"),b=bills[i];if(!b)return;
+ if(!confirm(`Bill ${b.billNo||b.id} (${b.name}) delete karna hai? Is bill ki amount aur booking count dashboard se bhi hat jayegi.`))return;
+ bills.splice(i,1);save("shubhBills",bills);
+ if(lastBill && (lastBill.billNo===b.billNo || lastBill.id===b.id))lastBill=null;
+ renderHistory();renderHome();toast("Bill/log deleted. Dashboard recalculated.");
+}
+function deleteCurrentBill(){
+ if(!lastBill)return;
+ let bills=load("shubhBills","[]"),idx=bills.findIndex(b=>(b.billNo&&b.billNo===lastBill.billNo)||b.id===lastBill.id);
+ if(idx<0){toast("Bill not found.");return}
+ if(!confirm(`Bill ${lastBill.billNo||lastBill.id} delete karna hai? Dashboard ka sirf isi bill/customer ka count aur revenue kam hoga.`))return;
+ bills.splice(idx,1);save("shubhBills",bills);lastBill=null;renderHome();go("history");toast("Single bill/log deleted.");
+}
+function nextBillNo(){
+ let n=Number(localStorage.getItem("shubhBillSeq")||"0")+1;
+ localStorage.setItem("shubhBillSeq",String(n));
+ let y=new Date().getFullYear();
+ return "ST-"+y+"-"+String(n).padStart(5,"0");
+}
+function dutyCalendarDays(start,end){
+ const s=new Date(start),e=new Date(end);
+ const s0=new Date(s.getFullYear(),s.getMonth(),s.getDate());
+ const e0=new Date(e.getFullYear(),e.getMonth(),e.getDate());
+ return Math.max(1,Math.floor((e0-s0)/86400000)+1);
+}
+function dutyDateList(start,end){
+ const s=new Date(start),days=dutyCalendarDays(start,end),out=[];
+ for(let i=0;i<days;i++){const d=new Date(s);d.setDate(d.getDate()+i);out.push(d.toISOString().slice(0,10));}
+ return out;
+}
+function endDuty(){
+ if(!active){toast("No active duty.");return}
+ let ed=new Date($("endAt").value),ek=Number($("endKm").value),sd=new Date(active.start),toll=Number($("endToll").value||0);
+ let customKmRate=$("endCustomKmRate").value===""?null:Number($("endCustomKmRate").value);
+ let customRent=$("endCustomRent").value===""?null:Number($("endCustomRent").value);
+ if(Number.isNaN(ed.getTime())||ed<=sd){toast("End time start time ke baad hona chahiye.");return}
+ if(!Number.isFinite(ek)||ek<active.startKm){toast("End KM Start KM se kam nahi ho sakta.");return}
+ if(!Number.isFinite(toll)||toll<0){toast("Toll amount valid dalo.");return}
+ if(customKmRate!==null&&(!Number.isFinite(customKmRate)||customKmRate<0)){toast("Custom KM rate valid dalo.");return}
+ if(customRent!==null&&(!Number.isFinite(customRent)||customRent<0)){toast("Custom rent valid dalo.");return}
+ let actual=Math.round((ed-sd)/60000),km=ek-active.startKm,included=0,base=0,kmRate=0,label="",extraRate=0,extraMin=0,kmCharge=0,minimumKm=0,pricingRule="",dutyDays=dutyCalendarDays(sd,ed),dutyDates=dutyDateList(sd,ed);
+ if(active.service==="driver"){
+   let r=DRIVER[active.plan];
+   included=r.min;
+   base=customRent!==null?customRent:r.base;
+   label="Driver Service — "+r.label;
+   if(active.plan==="outstation"){
+     // Outstation is charged per service day. A 5-calendar-day duty therefore
+     // becomes ₹1,500 × 5, with living/fooding noted separately.
+     included=0; extraRate=0; extraMin=0; base=base*dutyDays;
+     pricingRule=`Outstation ₹1,500/day × ${dutyDays} days + Living + Fooding`;
+   }else{
+     extraRate=customKmRate!==null?customKmRate:100;
+     extraMin=Math.max(0,actual-included);
+     pricingRule=`Driver plan • Extra ₹${extraRate}/hour`;
+   }
+ } else {
+   let c=CAR[active.car];included=600;label=c.name+" — "+(active.carType==="local"?"Local":"Outstation");
+   if(km>=300){kmRate=customKmRate!==null?customKmRate:12;minimumKm=0;kmCharge=km*kmRate;base=0;pricingRule=`300+ KM • ₹${kmRate}/km • No rent`;}
+   else{kmRate=customKmRate!==null?customKmRate:(active.carType==="local"?c.local:c.out);minimumKm=80;kmCharge=Math.max(km,80)*kmRate;base=customRent!==null?customRent:c.rent;pricingRule=`Under 300 KM • Minimum 80 KM • ₹${kmRate}/km + rent`;}
+   extraRate=150;extraMin=Math.max(0,actual-included);
+ }
+ let extraCharge=extraMin*extraRate/60,total=base+extraCharge+kmCharge+toll;
+ lastBill={...active,billNo:nextBillNo(),end:ed.toISOString(),endKm:ek,actual,km,included,extraMin,extraCharge,kmRate,kmCharge,minimumKm,base,total,label,extraRate,toll,pricingRule,dutyDays,dutyDates,serviceDate:new Date(sd.getFullYear(),sd.getMonth(),sd.getDate()).toISOString().slice(0,10),customRateApplied:(customKmRate!==null||customRent!==null),customKmRate,customRent,createdAt:Date.now()};
+ let bills=load("shubhBills","[]");bills.unshift(lastBill);save("shubhBills",bills.slice(0,50000));autoRecordWork(lastBill);
+ let loyaltySource={id:lastBill.id,bookingId:active.bookingId||lastBill.id,phone:lastBill.phone,name:lastBill.name,completedAt:Date.now(),billNo:lastBill.billNo,referralCode:active.referralCode||""};
+ let loyalty=awardLoyaltyForCompletedRide(loyaltySource);
+ let referralReward=processReferralForCompletedRide(loyaltySource);
+ if(active.bookingId){let linked=updateBookingRecord(active.bookingId,{completedAt:Date.now(),status:"completed",end:lastBill.end,billNo:lastBill.billNo});if(linked)saveDriverPackageRecord(linked);}
+ if(active.packageKey&&active.bookingId){let linked=load("shubhBookings","[]").find(x=>x.id===active.bookingId);if(linked)saveDriverPackageRecord(linked);}
+ removeAndSync("shubhActive");active=null;clearInterval(timerInterval);renderBill();toast("✅ Duty complete. Bill generated • Loyalty stamp "+Number(loyalty?.stamps||0)+"/5."+(referralReward?" • Referral ₹100 added.":""));
+}
+function updateBillCharges(){
+ if(!lastBill){toast("No bill open.");return}
+ let toll=Number($("editToll").value||0),other=Number($("editOther").value||0);
+ let rate=Number($("editKmRate").value),rent=Number($("editRent").value);
+ if(!Number.isFinite(toll)||toll<0||!Number.isFinite(other)||other<0||!Number.isFinite(rate)||rate<0||!Number.isFinite(rent)||rent<0){toast("Rate, rent aur charges valid dalo.");return}
+ lastBill.toll=toll;lastBill.other=other;lastBill.kmRate=rate;lastBill.base=rent;
+ if(lastBill.service==="car"){
+   if(lastBill.km>=300){lastBill.kmCharge=lastBill.km*rate;lastBill.base=0;lastBill.pricingRule=`300+ KM • ₹${rate}/km • No rent`;}
+   else{lastBill.kmCharge=Math.max(lastBill.km,80)*rate;lastBill.base=rent;lastBill.pricingRule=`Under 300 KM • Minimum 80 KM • ₹${rate}/km + rent`;}
+ }else{
+   if(lastBill.plan==="outstation" || (lastBill.pricingRule||"").startsWith("Outstation")){
+     lastBill.extraRate=0;
+     lastBill.extraMin=0;
+     lastBill.extraCharge=0;
+     const days=Number(lastBill.dutyDays||1);
+     lastBill.pricingRule=`Outstation ₹1,500/day × ${days} days + Living + Fooding`;
+     if(!lastBill.customRateApplied) lastBill.base=1500*days;
+   }else{
+     lastBill.extraRate=rate;
+     lastBill.extraCharge=lastBill.extraMin*rate/60;
+     lastBill.pricingRule=`Driver plan • Extra ₹${rate}/hour`;
+   }
+ }
+ lastBill.total=Number(lastBill.base||0)+Number(lastBill.extraCharge||0)+Number(lastBill.kmCharge||0)+toll+other;
+ let bills=load("shubhBills","[]"),idx=bills.findIndex(b=>(b.billNo&&b.billNo===lastBill.billNo)||b.id===lastBill.id);
+ if(idx>=0)bills[idx]=lastBill;save("shubhBills",bills);renderBill();toast("✅ Rate/rent/toll updated.");
+}
+function renderBill(){
+ let b=lastBill;go("bill");
+ $("billNo").textContent=b.billNo;
+ let billDate=new Date(b.createdAt);
+ $("billDate").textContent=billDate.toLocaleString("en-IN");
+ $("bBillDate").textContent=billDate.toLocaleDateString("en-IN",{day:"2-digit",month:"2-digit",year:"numeric"})+" • "+billDate.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+ $("total").textContent=money(b.total);$("bBillNo").textContent=b.billNo;$("bId").textContent=b.id;$("bCustomer").textContent=b.name;
+ $("bService").textContent=b.label;
+ $("bActual").textContent=(b.actual/60).toFixed(2)+" hours";
+ $("bIncluded").textContent=(b.pricingRule||"").startsWith("Outstation")?"Flat daily plan":(b.included/60).toFixed(0)+" hours";
+ const dayEl=$("bDutyDays");if(dayEl)dayEl.textContent=Number(b.dutyDays||1)+" day"+(Number(b.dutyDays||1)===1?"":"s");
+ const datesEl=$("bDutyDates");if(datesEl)datesEl.textContent=(b.dutyDates||[b.serviceDate||b.start?.slice(0,10)]).filter(Boolean).map(formatDateOnly).join(" • ");
+
+ $("bExtra").textContent=(b.pricingRule||"").startsWith("Outstation flat")?"—":Math.floor(b.extraMin/60)+"h "+(b.extraMin%60)+"m";$("bExtraCharge").textContent=money(b.extraCharge);
+ $("bKm").textContent=b.km.toFixed(1)+" km";$("bKmRate").textContent=b.service==="car"?money(b.kmRate)+"/km":money(b.extraRate)+"/hour";$("bKmCharge").textContent=b.service==="car"?money(b.kmCharge):"—";$("bBase").textContent=money(b.base);
+ $("bToll").textContent=money(b.toll||0);$("bPricingRule").textContent=b.pricingRule||"—";$("bOther").textContent=(b.other?money(b.other)+" • ":"")+(b.service==="driver"?"Food / living as applicable":"Toll / driver food extra");
+ $("editKmRate").value=b.service==="car"?(b.kmRate||0):(b.extraRate||0);$("editRent").value=b.service==="car"?(b.base||0):(b.base||0);$("editToll").value=b.toll||0;$("editOther").value=b.other||0;
+}
+function selectedMonth(){
+ let v=$("monthFilter").value;
+ return v||localDateKey().slice(0,7);
+}
+function populateMonths(){
+ let bills=load("shubhBills","[]"),bookings=load("shubhBookings","[]"),months=new Set();
+ bills.forEach(b=>{let m=bookingMonthKey(b);if(m)months.add(m)});
+ bookings.forEach(b=>{let m=bookingMonthKey(b);if(m)months.add(m)});
+ let arr=[...months].sort().reverse(),current=$("monthFilter").value;
+ $("monthFilter").innerHTML='<option value="ALL">All Time Turnover</option>'+arr.map(m=>{let d=new Date(m+"-01");return `<option value="${m}">${d.toLocaleString("en-IN",{month:"long",year:"numeric"})}</option>`}).join("");
+ if(current==="ALL"||arr.includes(current)) $("monthFilter").value=current;
+ else $("monthFilter").value=arr[0]||"ALL";
+}
+function clearDashboardDate(){if($("dateFilter"))$("dateFilter").value="";renderHome();}
+function renderHome(){
+ populateMonths();
+ let c=load("shubhCustomers","[]"),all=load("shubhBills","[]"),m=selectedMonth(),specificDate=$("dateFilter")?.value||"";
+ let bills=specificDate?all.filter(b=>{let dt=new Date(b.createdAt||b.end||b.serviceDate);return !Number.isNaN(dt.getTime())&&dt.toISOString().slice(0,10)===specificDate;}):(m==="ALL"?all:all.filter(b=>{let dt=new Date(b.createdAt||b.end||b.serviceDate);return !Number.isNaN(dt.getTime())&&dt.toISOString().slice(0,7)===m;}));
+ let revenue=bills.reduce((s,b)=>s+Number(b.total||0),0),km=bills.reduce((s,b)=>s+Number(b.km||0),0);
+ let drivers=bills.filter(b=>b.service==="driver"),cars=bills.filter(b=>b.service==="car");
+ let unique=new Set(bills.map(b=>b.phone||b.name)).size;
+ let driverRev=drivers.reduce((s,b)=>s+Number(b.total||0),0),carRev=cars.reduce((s,b)=>s+Number(b.total||0),0);
+ let extraRev=bills.reduce((s,b)=>s+Number(b.extraCharge||0),0);
+ let avg=bills.length?revenue/bills.length:0,total=bills.length||1,dp=Math.round(drivers.length/total*100),cp=100-dp;
+ let d=new Date(m+"-01");$("dashSubtitle").textContent=specificDate?new Date(specificDate+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"long",year:"numeric"})+" performance overview":(m==="ALL"?"All-time performance overview":d.toLocaleString("en-IN",{month:"long",year:"numeric"})+" performance overview");
+ $("monthRevenue").textContent=money(revenue);$("monthBills").textContent=bills.length;$("monthCustomers").textContent=unique;$("monthKm").textContent=km.toFixed(1);
+ $("driverCount").textContent=drivers.length;$("carCount").textContent=cars.length;$("avgBill").textContent=money(avg);
+ $("driverPct").textContent=dp+"%";$("carPct").textContent=cp+"%";$("driverBar").style.width=dp+"%";$("carBar").style.width=cp+"%";
+ $("driverRevenue").textContent=money(driverRev);$("carRevenue").textContent=money(carRev);$("extraRevenue").textContent=money(extraRev);
+ $("activeHome").classList.toggle("hidden",!active);if(active)$("activeHomeId").textContent=active.id;
+ renderBookingManager();
+ if($("historyMonth"))populateHistoryFilters();
+}
+function renderCustomers(){let list=load("shubhCustomers","[]");$("customerList").innerHTML=list.length?list.map(c=>`<div class="customer"><div class="avatar">${escapeHtml(c.name.charAt(0).toUpperCase())}</div><div class="grow"><b>${escapeHtml(c.name)}</b><small>${escapeHtml(c.phone)}</small></div><button class="btn outline mini" onclick='quickCustomer(${JSON.stringify(c)})'>Use</button><button class="btn danger mini" onclick='deleteCustomerByPhone(${JSON.stringify(c.phone)})'>Delete</button></div>`).join(""):`<div class="empty"><b>No saved customers yet</b>Customer booking start karte hi save ho jayega.</div>`}
+function deleteCustomerByPhone(phone){
+ if(active && active.phone===phone){toast("Active customer ko duty complete hone tak delete nahi kar sakte.");return}
+ if(!confirm("Is customer ki saved profile delete karni hai? Completed bills/history delete nahi honge.")) return;
+ let list=load("shubhCustomers","[]").filter(c=>c.phone!==phone);
+ save("shubhCustomers",list);
+ renderCustomers(); renderHome(); toast("Customer profile deleted.");
+}
+function quickCustomer(c){if(active){go("duty");return}resetForm();$("customerName").value=c.name;$("customerPhone").value=c.phone;go("booking")}
+function renderHistory(){
+ populateHistoryFilters();
+ let month=$("historyMonth")?.value||"",date=$("historyDate")?.value||"",q=($("historySearch")?.value||"").trim().toLowerCase();
+ let all=load("shubhBills","[]"),bookings=load("shubhBookings","[]");
+ const match=(b,isBooking=false)=>{let d=isBooking?bookingDateKey(b):bookingDateKey(b),m=isBooking?bookingMonthKey(b):bookingMonthKey(b);if(month&&m!==month)return false;if(date&&d!==date)return false;if(q){let hay=[b.name,b.phone,b.id,b.billNo,b.bookingId,b.status].join(" ").toLowerCase();if(!hay.includes(q))return false}return true};
+ let bills=all.filter(b=>match(b,false)).sort((a,b)=>new Date(b.createdAt||b.end||b.start||0)-new Date(a.createdAt||a.end||a.start||0)),bs=bookings.filter(b=>match(b,true)).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
+ $("historySummary").textContent=`${bills.length} completed bill(s) • ${bs.length} booking(s) found${date?" for "+new Date(date+"T00:00:00").toLocaleDateString("en-IN"):""}`;
+ $("historyList").innerHTML=bills.length?bills.map(b=>{let i=all.indexOf(b);return `<div class="customer"><div class="avatar">₹</div><div class="grow"><b>${escapeHtml(b.name)}</b><small>${escapeHtml(b.billNo||"No Bill No.")} • ${escapeHtml(b.id)} • ${formatDateOnly(b.end||b.createdAt)} • ${money(b.total)}</small></div><button class="btn outline mini" onclick="openBill(${i})">View</button><button class="btn danger mini" onclick="deleteSingleBill(${i})">Delete</button></div>`}).join(""):`<div class="empty"><b>No bills found</b>Is filter/date mein completed bill nahi mila.</div>`;
+ $("bookingHistoryList").innerHTML=bs.length?bs.map(b=>{
+   let done=b.completedAt;
+   let billsForBooking=all.filter(x=>x.bookingId===b.id||x.id===b.billId);
+   let bill=billsForBooking[0];
+   let bi=bill?all.indexOf(bill):-1;
+   return `<div class="customer"><div class="avatar">📅</div><div class="grow"><b>${escapeHtml(b.name)}</b><small>${escapeHtml(b.id)} • ${bookingWhen(b)} • ${escapeHtml(b.status||"confirmed")} ${done?"• Bill "+escapeHtml(b.billNo||bill?.billNo||"generated"):"• Bill pending"}</small></div><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end"><button class="btn outline mini" onclick='openBookingById(${JSON.stringify(b.id)})'>VIEW</button>${bill?`<button class="btn outline mini" onclick="openBill(${bi})">BILL</button>`:`<button class="btn gold mini" onclick='openBookingById(${JSON.stringify(b.id)})'>GENERATE BILL</button>`}<button class="btn danger mini" onclick='deleteBookingById(${JSON.stringify(b.id)})'>DELETE</button></div></div>`
+ }).join(""):`<div class="empty"><b>No bookings found</b>Is filter/date mein booking nahi mili.</div>`;
+} 
+function deleteBookingById(id){
+ let list=load("shubhBookings","[]"),b=list.find(x=>x.id===id);
+ if(!b){toast("Booking nahi mili.");return}
+ let linked=load("shubhBills","[]").some(x=>x.bookingId===id||x.id===b.billId);
+ let warning=linked?"Is booking ka bill bhi linked hai. Booking delete karne se bill/history safe rahegi. Continue?":"Is booking ko permanently delete karna hai?";
+ if(!confirm(warning))return;
+ save("shubhBookings",list.filter(x=>x.id!==id));
+ if(lastBooking&&lastBooking.id===id)lastBooking=null;
+ renderHistory();renderHome();toast("🗑️ Booking deleted.");
+}
+function openBookingById(id){let b=load("shubhBookings","[]").find(x=>x.id===id);if(!b){toast("Booking nahi mili.");return}lastBooking=b;go("bookingReceipt");renderBookingReceipt();}
+function openBillingFromBookingManager(id){let b=load("shubhBookings","[]").find(x=>x.id===id);if(!b){toast("Booking nahi mili.");return}lastBooking=b;go("bookingReceipt");renderBookingReceipt();setTimeout(()=>openBillFromBooking(),80);}
+
+function clearBillHistory(){
+ if(!confirm("WARNING: Saare completed bills/history permanently delete ho jayenge. Continue?")) return;
+ removeAndSync("shubhBills"); lastBill=null; renderHistory(); renderHome(); toast("Bill history deleted.");
+}
+function openBill(i){let list=load("shubhBills","[]");lastBill=list[i];renderBill()}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+async function canvasBill(){
+ const b=lastBill,W=1200,H=2220,c=document.createElement("canvas");c.width=W;c.height=H;let x=c.getContext("2d");
+ x.fillStyle="#f6f1e3";x.fillRect(0,0,W,H);x.fillStyle="#07152b";x.fillRect(0,0,W,420);
+ try{let img=new Image();img.src="logo.png";await new Promise((res,rej)=>{img.onload=res;img.onerror=rej});x.drawImage(img,55,35,300,300);}catch(e){}
+ x.fillStyle="#f3b719";x.font="900 78px Arial";x.fillText("SHUBH",390,115);x.fillStyle="#fff";x.font="900 48px Arial";x.fillText("TOUR & TRAVELS",390,175);x.fillStyle="#f3b719";x.font="700 23px Arial";x.fillText("SAFE DRIVE • HAPPY RIDE • PROFESSIONAL SERVICE",390,225);x.fillStyle="#fff";x.font="800 25px Arial";x.fillText("RATAN PALACE, KATORA TALAB, RAIPUR, CHHATTISGARH",390,275);x.fillStyle="#f3b719";x.font="700 20px Arial";x.fillText("CAR RENTAL • DRIVER SERVICE • TRAVEL BOOKING",390,315);
+ x.fillStyle="#07152b";x.font="900 48px Arial";x.fillText("FINAL DUTY BILL",70,495);x.fillStyle="#f3b719";x.font="900 72px Arial";x.fillText(money(b.total),70,585);
+ let rateLabel=b.service==="car"?"KM Rate":"Extra Rate";
+ let rows=[["Bill Number",b.billNo||"—"],["Bill Date",new Date(b.createdAt).toLocaleDateString("en-IN")],["Booking ID",b.id],["Customer",b.name],["Service",b.label],["Start",new Date(b.start).toLocaleString("en-IN")],["End",new Date(b.end).toLocaleString("en-IN")],["Total Duty",(b.actual/60).toFixed(2)+" hours"],["Duty Days",String(b.dutyDays||1)],["Service Dates",(b.dutyDates||[]).map(formatDateOnly).join(" • ")||formatDateOnly(b.serviceDate||b.start)],["Extra Time",Math.floor(b.extraMin/60)+"h "+(b.extraMin%60)+"m"],["Start KM",String(b.startKm)],["End KM",String(b.endKm)],["Total KM",b.km.toFixed(1)+" km"],[rateLabel,b.service==="car"?money(b.kmRate)+"/km":money(b.extraRate)+"/hour"],["KM Charge",b.service==="car"?money(b.kmCharge):"—"],["Pricing Rule",b.pricingRule||"—"],["Rent / Base",money(b.base)],["Toll",money(b.toll||0)],["Other",b.other?money(b.other):"—"]];
+ let y=675;
+ rows.forEach((r,i)=>{x.fillStyle=i%2?"#fffaf0":"#ebe3d1";x.fillRect(60,y-32,1080,54);x.fillStyle="#344054";x.font="700 22px Arial";x.fillText(r[0],85,y);x.fillStyle="#111827";x.font="700 22px Arial";x.fillText(String(r[1]),455,y);y+=59});
+ let totalY=y+35;x.fillStyle="#07152b";x.fillRect(60,totalY,1080,115);x.fillStyle="#fff";x.font="900 28px Arial";x.fillText("TOTAL AMOUNT",90,totalY+66);x.fillStyle="#f3b719";x.font="900 48px Arial";x.fillText(money(b.total),420,totalY+70);
+ let footY=Math.max(totalY+175,1940);x.fillStyle="#07152b";x.fillRect(60,footY,1080,185);x.fillStyle="#f3b719";x.font="900 30px Arial";x.textAlign="center";x.fillText("RIDE WITH TRUST • TRAVEL WITH SHUBH",W/2,footY+55);x.fillStyle="#fff";x.font="italic 20px Arial";x.fillText("Thank you for choosing Shubh — we look forward to your next journey.",W/2,footY+95);x.font="18px Arial";x.fillText("6265584095 / 9893772425",W/2,footY+130);x.textAlign="left";
+ return c;
+}
+async function imageBlob(){let canvas=await canvasBill();return await new Promise(resolve=>canvas.toBlob(resolve,"image/png",1))}
+async function downloadBillImage(){if(!lastBill)return;let blob=await imageBlob(),u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=`Shubh-Tour-Travels-${lastBill.id}.png`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1200);toast("Bill image downloaded.")}
+async function shareBillImage(){if(!lastBill)return;let blob=await imageBlob(),file=new File([blob],`Shubh-Tour-Travels-${lastBill.id}.png`,{type:"image/png"});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:"Shubh Tour & Travels Bill",text:"Final bill",files:[file]})}else{await downloadBillImage();toast("Image share supported nahi hai; image download ho gayi. WhatsApp me attach kar sakte ho.")}}catch(e){}}
+async function whatsappBillImage(){if(!lastBill)return;let blob=await imageBlob(),file=new File([blob],`Shubh-Tour-Travels-${lastBill.id}.png`,{type:"image/png"});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:"Shubh Tour & Travels Bill",text:"Final bill",files:[file]});return}downloadBillImage();let p=(lastBill.phone||"").replace(/\D/g,"");setTimeout(()=>{location.href=`https://wa.me/${p||"916265584095"}?text=${encodeURIComponent("Shubh Tour & Travels — Final Bill "+lastBill.id+" | Total "+money(lastBill.total)+". Bill image downloaded; WhatsApp me attach karke send kar dein.")}`},1200)}catch(e){}}
+["shareCustomerName","shareCustomerPhone","manualDriverName","manualDriverPhone","manualVehicleNo","manualVehicle"].forEach(id=>{let e=document.getElementById(id);if(e)e.addEventListener("input",updateDriverMessagePreview)});
+(function init(){
+ let initialRef=new URLSearchParams(location.search).get("ref");
+ if(initialRef&&findReferralByCode(initialRef))localStorage.setItem("shubhPendingReferral",String(initialRef).toUpperCase());
+ setService("driver");
+ $("startAt").value=nowLocal();$("endAt").value=nowLocal();
+ if($("ledgerDate"))$("ledgerDate").value=localDateKey();
+ populateAssignmentSelects();populateManualDriverSelect();populateHistoryFilters();
+ if($("fleetStartDate"))$("fleetStartDate").value=fleetToday();
+ if($("fleetReturnDate"))$("fleetReturnDate").value=fleetToday();
+ active=load("shubhActive","null");
+ if(active){navStack=["home"];history.replaceState({shubhPage:"home"},"","#home");showDuty();}
+ else{renderHome();}
+ setTimeout(checkBookingReminders,700);setInterval(checkBookingReminders,60000)
+})();
+loadSyncSettings();
+setTimeout(()=>{if(localStorage.getItem("shubhSyncUrl")){syncPull(true).catch(()=>{})}},900);
+window.addEventListener("online",()=>{if(localStorage.getItem("shubhSyncUrl"))syncNow(true)});
+</script>
+
+<script>
+
+window.addEventListener("error",e=>{try{console.error("Shubh app error:",e.error||e.message)}catch(_){}});
+window.addEventListener("unhandledrejection",e=>{try{console.error("Shubh app promise error:",e.reason)}catch(_){}});
+
+(function(){
+  let deferredPrompt;
+  const btn=document.getElementById('installBtn');
+  if(btn) btn.style.display='none';
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(btn)btn.style.display='block';});
+  if(btn) btn.addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;btn.style.display='none';});
+  window.addEventListener('appinstalled',()=>{if(btn)btn.style.display='none';});
+  if('serviceWorker' in navigator && location.protocol==='https:'){
+ const SW_FIX_VERSION='4.3';
+ if(localStorage.getItem('__shubh_sw_fix')!==SW_FIX_VERSION){
+  localStorage.setItem('__shubh_sw_fix',SW_FIX_VERSION);
+  navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister()))).then(()=>location.reload()).catch(()=>location.reload());
+ }else{
+  navigator.serviceWorker.register('./sw.js?v=43').catch(console.error);
+ }
+}
+})();
+</script>
+</body>
+</html>
